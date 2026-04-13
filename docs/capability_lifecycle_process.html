@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capability Lifecycle Process — USAREUR-AF ODT</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #fff;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    min-height: 100vh;
+  }
+
+  .back-link {
+    position: fixed; top: 16px; left: 20px;
+    z-index: 10;
+    text-decoration: none;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .back-link img {
+    width: 80px; height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .back-link .crest-text h1 {
+    font-size: 16px; font-weight: 700;
+    color: #1a2a3a; letter-spacing: 0.5px; line-height: 1.2;
+  }
+  .back-link .crest-text .subtitle {
+    font-size: 10px; color: #6a7a8a;
+    letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px;
+  }
+  .back-link:hover img { box-shadow: 0 3px 12px rgba(0,0,0,0.25); }
+
+  /* ── CONTENT ── */
+  .canvas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 80px 20px 40px;
+    position: relative;
+  }
+  .graphic-frame {
+    width: 100%;
+    max-width: 1200px;
+  }
+  .graphic-frame img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* ── SPRINT BAR SECTION ── */
+  .sprint-section {
+    max-width: 900px;
+    width: 100%;
+    margin-top: 120px;
+  }
+  .sprint-bar {
+    display: flex;
+    border-radius: 6px;
+    overflow: visible;
+    position: relative;
+  }
+  .sprint-seg {
+    padding: 16px 20px 16px 28px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 50%, calc(100% - 18px) 100%, 0 100%, 18px 50%);
+    margin-left: -8px;
+  }
+  .sprint-seg:first-child {
+    clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 50%, calc(100% - 18px) 100%, 0 100%);
+    margin-left: 0;
+    border-radius: 4px 0 0 4px;
+  }
+  .sprint-seg:last-child {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 18px 50%);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .seg-df { background: linear-gradient(135deg, #2D6A8F, #377EB8); flex: 2; }
+  .seg-build { background: linear-gradient(135deg, #d4820a, #e8991a); flex: 2; }
+  .seg-demo { background: linear-gradient(135deg, #C41A1C, #E41A1C); flex: 1.5; }
+
+  .sprint-note {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    font-style: italic;
+    color: #888;
+    margin-top: 10px;
+  }
+  .sprint-footnote {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 6px;
+  }
+
+  /* ── BOTTOM BARS ── */
+  .bottom-bars {
+    display: flex;
+    gap: 0;
+    margin-top: 20px;
+    max-width: 750px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .bar-safe {
+    flex: 3;
+    background: linear-gradient(90deg, #c0392b, #e74c3c);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    padding: 10px 16px;
+    border-radius: 6px 0 0 6px;
+    position: relative;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
+  .bar-safe::after {
+    content: '';
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0; height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 14px solid #e74c3c;
+    z-index: 2;
+  }
+  .bar-ops {
+    flex: 2;
+    background: linear-gradient(90deg, #27ae60, #2ecc71);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    padding: 10px 16px;
+    border-radius: 0 6px 6px 0;
+    margin-left: 12px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
+
+  /* ── INSET ZOOM ── */
+  .sprint-section {
+    position: relative;
+  }
+  .zoom-dashed-box {
+    border: 2px solid #d4820a;
+    border-radius: 6px;
+    padding: 12px;
+    position: relative;
+  }
+
+  @media print {
+    @page { size: landscape; margin: 0; }
+    .back-link { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<a class="back-link" href="sdlc_overview.html" title="Back to Full Process Detail">
+  <img src="HERMES_LOGO.jpg" alt="HERMES">
+  <div class="crest-text">
+    <h1>Capability Lifecycle Process</h1>
+    <div class="subtitle">USAREUR-AF Operational Data Teams</div>
+  </div>
+</a>
+
+<div class="canvas">
+  <div class="graphic-frame">
+    <img src="capability_lifecycle_process.png" alt="Capability Lifecycle Process — Intake &amp; Scoping, Concept, Development (SAFe), Execution &amp; Sustainment, Evolution / EOL">
+  </div>
+
+  <svg id="zoomLine" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:10;"></svg>
+
+  <div class="sprint-section">
+    <div class="zoom-dashed-box">
+    <div class="sprint-bar">
+      <div class="sprint-seg seg-df">D&amp;F</div>
+      <div class="sprint-seg seg-build">Build</div>
+      <div class="sprint-seg seg-build">Build</div>
+      <div class="sprint-seg seg-build">Build</div>
+      <div class="sprint-seg seg-build">Build</div>
+      <div class="sprint-seg seg-demo">Demo</div>
+    </div>
+    <div class="sprint-footnote">D&amp;F = Discovery &amp; Framing</div>
+    </div><!-- /zoom-dashed-box -->
+    <div class="sprint-note" style="margin-top:50px;">New Capabilities Built Inside SAFe &mdash; Operationalized Outside SAFe</div>
+
+    <div style="margin-top:40px; text-align:center;">
+      <img src="safe_ops_bars.png" alt="SAFe Development → Operational Sustainment" style="max-width:750px; width:100%;">
+    </div>
+  </div>
+</div>
+
+
+<script>
+function drawZoomLine() {
+  var svg = document.getElementById('zoomLine');
+  var canvas = document.querySelector('.canvas');
+  var img = document.querySelector('.graphic-frame img');
+  var box = document.querySelector('.zoom-dashed-box');
+  if (!svg || !canvas || !img || !box) return;
+
+  svg.innerHTML = '';
+  var canvasRect = canvas.getBoundingClientRect();
+  var imgRect = img.getBoundingClientRect();
+  var boxRect = box.getBoundingClientRect();
+
+  // X: center of Development(SAFe) phase on PNG (~42% from left of image)
+  var x = imgRect.left + imgRect.width * 0.42 - canvasRect.left;
+
+  // Y start: bottom of the phase boxes (~93% down the PNG)
+  var y1 = imgRect.top + imgRect.height * 0.90 - canvasRect.top;
+
+  // Y end: top of the dashed box
+  var y2 = boxRect.top - canvasRect.top;
+
+  var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  line.setAttribute('x1', x);
+  line.setAttribute('y1', y1);
+  line.setAttribute('x2', x);
+  line.setAttribute('y2', y2);
+  line.setAttribute('stroke', '#d4820a');
+  line.setAttribute('stroke-width', '2');
+  line.setAttribute('stroke-dasharray', '8,4');
+  svg.appendChild(line);
+}
+window.addEventListener('load', function() { setTimeout(drawZoomLine, 300); });
+window.addEventListener('resize', drawZoomLine);
+</script>
+
+</body>
+</html>
