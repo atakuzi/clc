@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Capability Lifecycle — ODT Development Process</title>
 <link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/jpeg" href="assets/HERMES_LOGO.jpg">
 <meta name="description" content="USAREUR-AF ODT Capability Lifecycle development process, SAFe framework implementation, and team organization guide.">
 </head>
 <body>
@@ -12,7 +13,7 @@
 <!-- ═══════ STICKY NAVIGATION ═══════ -->
 <nav class="site-nav" id="siteNav">
   <div class="site-nav-inner">
-    <a class="nav-brand" href="#">
+    <a class="nav-brand" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
       <img src="assets/HERMES_LOGO.jpg" alt="HERMES">
       <div>
         <div class="nav-brand-text">Capability Lifecycle</div>
@@ -31,18 +32,11 @@
       <a href="#capLifecycle" data-section="capLifecycle">Cap Lifecycle</a>
       <a href="#implGuide" data-section="implGuide">Impl Guide</a>
     </div>
+    <a class="nav-download" href="assets/DSD_Alternate_Visualization.pptx" download title="Download Alternate Visualization PowerPoint">&#x1F4CA; Alt Visual</a>
   </div>
 </nav>
 
-<!-- Unit crest -->
-<div class="unit-crest">
-  <img src="assets/HERMES_LOGO.jpg" alt="HERMES">
-  <div class="crest-text">
-    <h1>Capability Lifecycle &mdash; ODT Development Process</h1>
-    <div class="subtitle">USAREUR-AF Operational Data Team</div>
-    <div style="font-size:9px; color:#999; margin-top:3px; font-style:italic;">Adapted from Agile / SAFe SDLC (MAANG / Fortune 500)</div>
-  </div>
-</div>
+<!-- Unit crest removed — branding now in sticky nav -->
 
 <div class="main-content">
 
@@ -1198,24 +1192,31 @@
 
 
 
-<!-- Fixed scroll-down nav -->
-<!-- Fixed side button: Alternate Visualization PPT -->
-<a href="assets/DSD_Alternate_Visualization.pptx" download
-   style="position:fixed; right:0; top:50%; transform:translateY(-50%); z-index:100;
-          writing-mode:vertical-rl; text-orientation:mixed;
-          background:#1a2a3a; color:#fff; padding:14px 10px;
-          font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
-          text-decoration:none; border-radius:8px 0 0 8px;
-          box-shadow:-2px 0 10px rgba(0,0,0,0.2);
-          transition:all 0.15s;"
-   onmouseover="this.style.background='#2a4a6a';this.style.padding='14px 14px';"
-   onmouseout="this.style.background='#1a2a3a';this.style.padding='14px 10px';"
-   title="Download Alternate Visualization PowerPoint">&#x1F4CA; Alt Visual</a>
-
+<!-- Mobile scroll-down nav -->
 <div class="scroll-nav" id="scrollNav">
   <div class="scroll-label" id="scrollLabel">Org Chart</div>
   <button id="scrollBtn" onclick="scrollNext()">&#x25BC;</button>
 </div>
+
+<!-- Acronym Glossary Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-glossary">
+      <strong>PSB</strong> Priority Steering Board &bull;
+      <strong>ART</strong> Agile Release Train &bull;
+      <strong>RTE</strong> Release Train Engineer &bull;
+      <strong>BHO</strong> Battle Hand-Over &bull;
+      <strong>DSD</strong> Decision Support Directorate &bull;
+      <strong>PI</strong> Program Increment &bull;
+      <strong>SAFe</strong> Scaled Agile Framework &bull;
+      <strong>TIL</strong> Theater Innovation Lab &bull;
+      <strong>GTEAD</strong> Global Theater Engagement Acquisition Directorate &bull;
+      <strong>TACON</strong> Tactical Control &bull;
+      <strong>ADCON</strong> Administrative Control
+    </div>
+    <div class="footer-meta">Adapted from Agile / SAFe SDLC (MAANG / Fortune 500) &mdash; USAREUR-AF Operational Data Team</div>
+  </div>
+</footer>
 
 
 

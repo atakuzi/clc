@@ -121,7 +121,7 @@ function drawOrgWires() {
     if (old) old.remove();
     var hline = document.createElement('div');
     hline.className = 'org-hline-dynamic';
-    hline.style.cssText = 'position:absolute;top:0;height:2px;background:#0f172a;z-index:0;';
+    hline.style.cssText = 'position:absolute;top:0;height:2px;background:#475569;z-index:0;';
     hline.style.left = firstCenter + 'px';
     hline.style.width = (lastCenter - firstCenter) + 'px';
     level.appendChild(hline);

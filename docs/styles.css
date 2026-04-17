@@ -1322,3 +1322,110 @@ body {
 @media print {
   .back-link { display: none; }
 }
+
+/* ═══════════════════════════════════════
+   POLISH FIXES
+   ═══════════════════════════════════════ */
+
+/* ── Nav Download Button ── */
+.nav-download {
+  flex-shrink: 0;
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--bg-surface);
+  background: var(--text-primary);
+  text-decoration: none;
+  padding: 7px 14px;
+  border-radius: 6px;
+  letter-spacing: 0.3px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav-download:hover {
+  background: var(--c-concept);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ── Table Row Hover States ── */
+.sync-table tbody tr:hover td {
+  background: var(--bg-subtle);
+  transition: background 0.15s;
+}
+.sync-table tbody tr:hover .col-role {
+  background: #e8ecf0;
+}
+
+/* ── Softer Org Chart Lines ── */
+.org-wire-connector { background: #475569; }
+.org-wire-hline { background: #475569; }
+.org-wire-vdrop { background: #475569; }
+
+/* ── Normalized Section Spacing ── */
+.considerations { margin-top: 56px; }
+.sync-section { margin-top: 56px; }
+.impl-guide { margin-top: 32px; }
+.onepager { margin-top: 40px; }
+
+/* ── Sprint Bar Midpoint — More Breathing Room ── */
+.sprint-bar .midpoint-diamond { top: -22px; }
+
+/* ── Mobile Table Scroll Hint ── */
+.table-scroll-wrap {
+  position: relative;
+  overflow: visible;
+}
+.table-scroll-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 40px; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(248,250,252,0.9));
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* ── Site Footer ── */
+.site-footer {
+  width: 100%;
+  margin-top: 64px;
+  padding: 32px 24px;
+  background: var(--text-primary);
+  color: rgba(255,255,255,0.7);
+}
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+.footer-glossary {
+  font-size: 11px;
+  line-height: 2;
+  letter-spacing: 0.2px;
+}
+.footer-glossary strong {
+  color: rgba(255,255,255,0.95);
+  font-weight: 700;
+}
+.footer-meta {
+  margin-top: 16px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  font-style: italic;
+}
+
+@media print {
+  .site-footer { display: none; }
+  .nav-download { display: none; }
+}
+
+@media (max-width: 1024px) {
+  .table-scroll-wrap::after { opacity: 1; }
+}
+@media (max-width: 768px) {
+  .nav-download { display: none; }
+  .site-footer { padding: 24px 16px; }
+  .footer-glossary { font-size: 10px; }
+}
