@@ -1,0 +1,32 @@
+name: Deploy to Google App Engine
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          # You need to configure Workload Identity Federation in Google Cloud
+          # OR use credentials_json with a Github Secret.
+          # Uncomment and configure the option you prefer:
+          # credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+          # workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+          # service_account: 'my-service-account@my-project.iam.gserviceaccount.com'
+
+      - name: Deploy to App Engine
+        uses: google-github-actions/deploy-appengine@v2
+        with:
+          # Your App Engine will detect app.yaml in the root by default
+          deliverables: app.yaml
+          project_id: sandbox-484521
