@@ -13,7 +13,7 @@
 <!-- ═══════ STICKY NAVIGATION ═══════ -->
 <nav class="site-nav" id="siteNav">
   <div class="site-nav-inner">
-    <a class="nav-brand" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    <a class="nav-brand" href="#" id="navBrand">
       <img src="assets/HERMES_LOGO.jpg" alt="HERMES">
       <div>
         <div class="nav-brand-text">Capability Lifecycle</div>
@@ -284,7 +284,7 @@
      ═══════════════════════════════════════════════════════ -->
 <div class="onepager">
   <div class="onepager-divider"></div>
-  <h2 class="onepager-title" id="orgChart">Team Organization &mdash; DSD Structure <button class="org-expand-all" onclick="toggleAllOrg()" id="orgExpandBtn">Expand All</button></h2>
+  <h2 class="onepager-title" id="orgChart">Team Organization &mdash; DSD Structure <button class="org-expand-all" type="button" id="orgExpandBtn">Expand All</button></h2>
 
   <!-- Wire diagram -->
   <div class="org-wire">
@@ -379,16 +379,16 @@
   <p style="font-size:12px; color:#6a7a8a; margin-bottom:12px;">These are the ONLY authorized meetings. No other ceremonial or drive-by meetings. If you need something not on this list, it goes through ART.</p>
 
   <div class="meeting-tabs" id="meetingTabs">
-    <button class="meeting-tab active" data-tab="all" onclick="showMeetingTab('all')">All</button>
-    <button class="meeting-tab" data-tab="psb" onclick="showMeetingTab('psb')">PSB Week</button>
-    <button class="meeting-tab" data-tab="sprint" onclick="showMeetingTab('sprint')">Sprint Ceremonies</button>
-    <button class="meeting-tab" data-tab="midpoint" onclick="showMeetingTab('midpoint')">Midpoint</button>
-    <button class="meeting-tab" data-tab="demo" onclick="showMeetingTab('demo')">Demo / Retro</button>
+    <button class="meeting-tab active" type="button" data-tab="all">All</button>
+    <button class="meeting-tab" type="button" data-tab="psb">PSB Week</button>
+    <button class="meeting-tab" type="button" data-tab="sprint">Sprint Ceremonies</button>
+    <button class="meeting-tab" type="button" data-tab="midpoint">Midpoint</button>
+    <button class="meeting-tab" type="button" data-tab="demo">Demo / Retro</button>
   </div>
   <table class="impl-table" id="meetingTable">
     <thead><tr><th>Meeting</th><th>When</th><th>Duration</th><th>Attendees</th><th>Purpose</th><th>Output</th></tr></thead>
     <tbody>
-      <tr style="background:rgba(42,8,69,0.04);">
+      <tr data-phase="psb" style="background:rgba(42,8,69,0.04);">
         <td>DSD Lead Planning Day</td>
         <td>D-1</td>
         <td>Half day</td>
@@ -396,7 +396,7 @@
         <td>Intake &amp; Integration team presents scoped problems. Team leads recommend priority, then resource allocation. PSB RXL (rehearsal).</td>
         <td>PSB briefing package ready; draft order; no surprises at PSB</td>
       </tr>
-      <tr style="background:rgba(42,8,69,0.04);">
+      <tr data-phase="psb" style="background:rgba(42,8,69,0.04);">
         <td>PSB with CG</td>
         <td>D-Day</td>
         <td>As scheduled</td>
@@ -404,7 +404,7 @@
         <td>CG approves/defers/divests each project. Priorities ranked. Resources allocated.</td>
         <td>GO/NO-GO per project; decisions documented same day</td>
       </tr>
-      <tr style="background:rgba(42,8,69,0.04);">
+      <tr data-phase="psb" style="background:rgba(42,8,69,0.04);">
         <td>ART Sync</td>
         <td>D+1</td>
         <td>1&ndash;2 hrs</td>
@@ -412,7 +412,7 @@
         <td>Assign teams to projects, identify cross-team dependencies, start work breakdown</td>
         <td>Teams assigned; dependency map</td>
       </tr>
-      <tr style="background:rgba(42,8,69,0.04);">
+      <tr data-phase="psb" style="background:rgba(42,8,69,0.04);">
         <td>PI Kickoff</td>
         <td>D+2</td>
         <td>1&ndash;2 hrs</td>
@@ -420,7 +420,7 @@
         <td>Brief PSB summary, set cycle objectives, Sprint 1 scope understood</td>
         <td>Everyone aligned on what we&rsquo;re building this cycle</td>
       </tr>
-      <tr style="background:rgba(42,8,69,0.04);">
+      <tr data-phase="psb" style="background:rgba(42,8,69,0.04);">
         <td>BHO &mdash; Intake &amp; Integration to Team</td>
         <td>D+3</td>
         <td>1&ndash;2 hrs</td>
@@ -428,7 +428,7 @@
         <td>Build stakeholder map per project: consumer, success criteria, approver</td>
         <td>Stakeholder map per project complete</td>
       </tr>
-      <tr>
+      <tr data-phase="sprint">
         <td>Daily Standup</td>
         <td>Every work day (Wk 2&ndash;12)</td>
         <td>&le;15 min</td>
@@ -436,7 +436,7 @@
         <td>What did you do, what will you do, any blockers</td>
         <td>Blockers escalated same day</td>
       </tr>
-      <tr style="background:rgba(212,130,10,0.04);">
+      <tr data-phase="midpoint" style="background:rgba(212,130,10,0.04);">
         <td>Scrum of Scrums</td>
         <td>~D+35 (midpoint)</td>
         <td>1 hr</td>
@@ -444,7 +444,7 @@
         <td><strong>Process only</strong> &mdash; not project content. Is what we are doing working?</td>
         <td>Process changes agreed for remaining sprints</td>
       </tr>
-      <tr style="background:rgba(212,130,10,0.04);">
+      <tr data-phase="midpoint" style="background:rgba(212,130,10,0.04);">
         <td>Product Midpoint Check-in</td>
         <td>~D+35 (same day)</td>
         <td>1 hr</td>
@@ -452,7 +452,7 @@
         <td><strong>Project-specific.</strong> What&rsquo;s on track, what&rsquo;s at risk, what needs to pivot.</td>
         <td>Decisions documented; priorities adjusted if needed</td>
       </tr>
-      <tr>
+      <tr data-phase="sprint">
         <td>Sprint Boundary AAR</td>
         <td>End of each sprint</td>
         <td>30&ndash;45 min</td>
@@ -460,7 +460,7 @@
         <td>Internal team retro &mdash; what worked, what didn&rsquo;t</td>
         <td>Milestone chart updated; demo materials prepped</td>
       </tr>
-      <tr style="background:rgba(212,130,10,0.04);">
+      <tr data-phase="sprint" style="background:rgba(212,130,10,0.04);">
         <td>AAR w/ DSD &amp; Stakeholders</td>
         <td>O/A first day of each sprint</td>
         <td>30&ndash;45 min</td>
@@ -468,7 +468,7 @@
         <td>ART provides project updates to DSD and stakeholders. Status, risks, decisions.</td>
         <td>Leadership informed; blockers escalated</td>
       </tr>
-      <tr style="background:rgba(212,130,10,0.04);">
+      <tr data-phase="sprint" style="background:rgba(212,130,10,0.04);">
         <td>ART Back-Brief</td>
         <td>Start of dev sprints</td>
         <td>30 min</td>
@@ -476,7 +476,7 @@
         <td>Back-brief: the plan, dependencies, projected progress</td>
         <td>Boss aligned on expectations and constraints</td>
       </tr>
-      <tr style="background:rgba(196,26,28,0.04);">
+      <tr data-phase="demo" style="background:rgba(196,26,28,0.04);">
         <td>Product Demo</td>
         <td>Week 12</td>
         <td>As needed</td>
@@ -484,7 +484,7 @@
         <td>Demo working capability &mdash; not slides. Named consumer validates.</td>
         <td>Feedback collected same day; categorized: fix now / next cycle / backlog / won&rsquo;t do</td>
       </tr>
-      <tr style="background:rgba(196,26,28,0.04);">
+      <tr data-phase="demo" style="background:rgba(196,26,28,0.04);">
         <td>Cycle Retro / AAR</td>
         <td>Week 12 (after demo)</td>
         <td>1&ndash;2 hrs</td>
@@ -581,19 +581,19 @@
   <div class="sync-subtitle">Who does what across the 60-day (12-week) PI cycle. Week 1 = PSB activities, Weeks 2&ndash;3 = Discovery &amp; Framing, Weeks 4&ndash;11 = Dev Sprints (4x), Week 12 = Demo/Retro.</div>
 
   <div class="sync-filter-bar" id="syncFilterBar">
-    <button class="sync-filter-btn active" data-role="all" onclick="filterSyncRole('all')">All Roles</button>
-    <button class="sync-filter-btn" data-role="0" onclick="filterSyncRole('0')">CG / Senior Leaders</button>
-    <button class="sync-filter-btn" data-role="1" onclick="filterSyncRole('1')">OIC / NCOIC</button>
-    <button class="sync-filter-btn" data-role="2" onclick="filterSyncRole('2')">ART (RTE)</button>
-    <button class="sync-filter-btn" data-role="3" onclick="filterSyncRole('3')">CDO</button>
-    <button class="sync-filter-btn" data-role="4" onclick="filterSyncRole('4')">Intake &amp; Integration</button>
-    <button class="sync-filter-btn" data-role="5" onclick="filterSyncRole('5')">Product Managers</button>
-    <button class="sync-filter-btn" data-role="6" onclick="filterSyncRole('6')">Scrum Masters</button>
-    <button class="sync-filter-btn" data-role="7" onclick="filterSyncRole('7')">Developers</button>
+    <button class="sync-filter-btn active" type="button" data-role="all">All Roles</button>
+    <button class="sync-filter-btn" type="button" data-role="cg">CG / Senior Leaders</button>
+    <button class="sync-filter-btn" type="button" data-role="oic">OIC / NCOIC</button>
+    <button class="sync-filter-btn" type="button" data-role="art">ART (RTE)</button>
+    <button class="sync-filter-btn" type="button" data-role="cdo">CDO</button>
+    <button class="sync-filter-btn" type="button" data-role="intake">Intake &amp; Integration</button>
+    <button class="sync-filter-btn" type="button" data-role="pm">Product Managers</button>
+    <button class="sync-filter-btn" type="button" data-role="sm">Scrum Masters</button>
+    <button class="sync-filter-btn" type="button" data-role="dev">Developers</button>
   </div>
   <table class="sync-table">
     <thead>
-      <tr>
+      <tr data-role="cg">
         <th style="background:#f8f9fa;color:#1a2a3a;">Role</th>
         <th class="phase-header ph-psb">PSB Week<br>(D-1 &rarr; D+3)</th>
         <th class="phase-header ph-scope">Discovery &amp; Framing<br>(Wk 2&ndash;3)</th>
@@ -605,7 +605,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr data-role="oic">
         <td class="col-role">CG / Senior Leaders</td>
         <td><ul><li>Chair PSB (D-Day)</li><li>Set priorities</li><li>Approve/defer/divest</li></ul></td>
         <td class="draft-note">No direct involvement</td>
@@ -615,7 +615,7 @@
         <td class="draft-note">No direct involvement</td>
         <td><ul><li>Attend demo</li><li>Provide feedback</li><li>Approve next cycle priorities</li></ul></td>
       </tr>
-      <tr>
+      <tr data-role="art">
         <td class="col-role">OIC / NCOIC</td>
         <td><ul><li>Attend Planning Day (D-1)</li><li>Brief at PSB</li><li>ART Sync (D+1)</li><li>PI Kickoff (D+2)</li></ul></td>
         <td><ul><li>Validate scope decisions</li><li>Resource allocation</li></ul></td>
@@ -625,7 +625,7 @@
         <td><ul><li>Remove blockers</li><li>Monitor progress</li></ul></td>
         <td><ul><li>Review demo materials</li><li>Lead internal AAR</li><li>Prep next cycle PSB brief</li></ul></td>
       </tr>
-      <tr>
+      <tr data-role="cdo">
         <td class="col-role">ART (RTE)</td>
         <td><ul><li>Support Planning Day (D-1)</li><li>Attend PSB</li><li>Lead ART Sync (D+1)</li><li>Lead PI Kickoff (D+2)</li><li>BHO &mdash; Intake &amp; Integration to Team (D+3)</li></ul></td>
         <td><ul><li>Assign teams &amp; work</li><li>Coordinate cross-team deps</li></ul></td>
@@ -635,14 +635,14 @@
         <td><ul><li>Facilitate sprint ceremonies</li><li>Handle random drop-ins</li><li>AAR w/ DSD &amp; Stakeholders</li></ul></td>
         <td><ul><li>Coordinate demo logistics</li><li>Facilitate Retro</li><li>Aggregate lessons learned</li></ul></td>
       </tr>
-      <tr>
+      <tr data-role="intake">
         <td class="col-role">CDO</td>
         <td><ul><li>Attend PSB</li><li>Align data strategy</li></ul></td>
         <td><ul><li>Validate data requirements</li><li>Governance guidance</li></ul></td>
         <td colspan="4" style="text-align:center;"><ul><li>Available for governance decisions</li><li>Stakeholder engagement as needed</li></ul></td>
         <td><ul><li>Attend demo</li><li>Strategic feedback</li></ul></td>
       </tr>
-      <tr>
+      <tr data-role="pm">
         <td class="col-role">Intake &amp; Integration Team<br><span style="font-weight:400;font-size:10px;">(Deputy + 2&ndash;3)</span></td>
         <td><ul><li>Present scoped problems (D-1)</li><li>PSB RXL (rehearsal)</li><li>BHO &mdash; Team handoff (D+3)</li></ul></td>
         <td style="background:rgba(55,126,184,0.06);"><ul><li><strong>PRIMARY EFFORT</strong></li><li>Scope incoming projects</li><li>Data connection &amp; history review</li><li>Feasibility assessment</li><li>Write sprint-ready requirements</li></ul></td>
@@ -652,7 +652,7 @@
         <td><ul><li>Finalize next-cycle scope</li><li>Support dev freeze prep</li></ul></td>
         <td><ul><li>Validate demo against requirements</li><li>Lessons learned (Responsible)</li></ul></td>
       </tr>
-      <tr>
+      <tr data-role="sm">
         <td class="col-role">Product Managers</td>
         <td><ul><li>Attend PSB</li><li>BHO (D+3) &mdash; Intake &amp; Integration to Team</li><li>Stakeholder maps</li></ul></td>
         <td><ul><li>Prioritize backlog</li><li>Define acceptance criteria</li></ul></td>
@@ -662,7 +662,7 @@
         <td><ul><li>Prep demo materials</li><li>Milestone chart update</li></ul></td>
         <td><ul><li>Lead product demo</li><li>Collect stakeholder feedback</li></ul></td>
       </tr>
-      <tr>
+      <tr data-role="dev">
         <td class="col-role">Scrum Masters</td>
         <td><ul><li>ART Sync (D+1)</li><li>PI Kickoff (D+2)</li></ul></td>
         <td><ul><li>Stand up sprint ceremonies</li><li>Facilitate discovery sprint</li></ul></td>
@@ -672,7 +672,7 @@
         <td><ul><li>Dev freeze coordination</li><li>Sprint close-out</li></ul></td>
         <td><ul><li>Facilitate Demo/Retro</li><li>Update milestone chart</li></ul></td>
       </tr>
-      <tr>
+      <tr data-role="km">
         <td class="col-role">Developers<br><span style="font-weight:400;font-size:10px;">(~5 per team)</span></td>
         <td><ul><li>PI Kickoff (D+2)</li></ul></td>
         <td><ul><li>Technical discovery</li><li>Estimate work</li><li>Prototype if needed</li></ul></td>
@@ -682,7 +682,7 @@
         <td style="background:rgba(212,130,10,0.06);"><ul><li>Feature completion</li><li>Dev freeze before demo</li><li>Bug fixes only</li></ul></td>
         <td><ul><li>Support demo</li><li>Internal team AAR</li></ul></td>
       </tr>
-      <tr>
+      <tr data-role="sustainment">
         <td class="col-role">Knowledge Mgmt (KM)<br><span style="font-weight:400;font-size:10px;">(Under Intake &amp; Integration)</span></td>
         <td><ul><li>BHO (D+3)</li></ul></td>
         <td style="background:rgba(55,126,184,0.06);"><ul><li>Develop artifacts</li><li>Help with documentation</li></ul></td>
@@ -692,7 +692,7 @@
         <td><ul><li>Update technical docs</li><li>Update user guides</li></ul></td>
         <td><ul><li>Link with PMs</li><li>Compile demo &amp; AAR materials</li></ul></td>
       </tr>
-      <tr>
+      <tr data-role="training">
         <td class="col-role">Sustainment<br><span class="tbd">TBD &mdash; Need People</span></td>
         <td class="draft-note">N/A this cycle</td>
         <td class="draft-note">N/A this cycle</td>
@@ -870,8 +870,8 @@
   <div class="impl-subtitle">Task &rarr; Conditions &rarr; Standards. Who does what, when, and to what standard. This is the execution-level reference for PMs, Scrum Masters, and developers.</div>
 
   <div class="impl-toggle">
-    <button class="active" onclick="showImplView('role')">By Role</button>
-    <button onclick="showImplView('timeline')">By Phase</button>
+    <button class="active" type="button" data-view="role">By Role</button>
+    <button type="button" data-view="timeline">By Phase</button>
   </div>
 
   <!-- ══════════════════════════════════════
@@ -1250,7 +1250,7 @@
 <!-- Mobile scroll-down nav -->
 <div class="scroll-nav" id="scrollNav">
   <div class="scroll-label" id="scrollLabel">Org Chart</div>
-  <button id="scrollBtn" onclick="scrollNext()">&#x25BC;</button>
+  <button id="scrollBtn" type="button">&#x25BC;</button>
 </div>
 
 <!-- Acronym Glossary Footer -->

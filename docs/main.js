@@ -1,9 +1,5 @@
-/* ═══════════════════════════════════════════════
-   ODT Capability Lifecycle — Main JavaScript
-   Navigation, Scroll-Spy, Animations, SVG Drawing
-   ═══════════════════════════════════════════════ */
+/* ODT Capability Lifecycle - Main JavaScript */
 
-/* ── Debounce utility ── */
 function debounce(fn, delay) {
   var timer;
   return function() {
@@ -12,83 +8,51 @@ function debounce(fn, delay) {
   };
 }
 
-/* ═══════════════════════════════════════
-   SCROLL-SPY NAVIGATION
-   ═══════════════════════════════════════ */
-(function() {
-  var navLinks = document.querySelectorAll('#navLinks a[data-section]');
-  var sections = [];
+function setExpandedState(trigger, content, isOpen) {
+  if (!trigger || !content) return;
 
-  navLinks.forEach(function(link) {
-    var id = link.getAttribute('data-section');
-    var el = document.getElementById(id);
-    if (el) sections.push({ id: id, el: el, link: link });
-  });
+  trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  content.hidden = false;
+  content.style.maxHeight = isOpen ? content.scrollHeight + 'px' : '0px';
 
-  function updateActiveNav() {
-    var scrollY = window.scrollY;
-    var navHeight = 80; // nav height + offset
-    var current = null;
-
-    for (var i = sections.length - 1; i >= 0; i--) {
-      var rect = sections[i].el.getBoundingClientRect();
-      if (rect.top <= navHeight + 60) {
-        current = sections[i];
-        break;
+  if (!isOpen) {
+    window.setTimeout(function() {
+      if (trigger.getAttribute('aria-expanded') === 'false') {
+        content.hidden = true;
       }
-    }
-
-    navLinks.forEach(function(link) { link.classList.remove('active'); });
-    if (current) current.link.classList.add('active');
+    }, 400);
   }
+}
 
-  window.addEventListener('scroll', debounce(updateActiveNav, 50));
-  updateActiveNav();
-})();
+function fillList(list, items) {
+  if (!list) return;
+  list.replaceChildren();
 
-/* ═══════════════════════════════════════
-   SCROLL ANIMATIONS (Intersection Observer)
-   ═══════════════════════════════════════ */
-(function() {
-  // Add fade-in class to major sections
-  var selectors = [
-    '.row', '.psb-section', '.onepager', '.considerations',
-    '.tbd-section', '.sync-section', '.impl-guide',
-    '.role-card', '.impl-section'
-  ];
-
-  selectors.forEach(function(sel) {
-    document.querySelectorAll(sel).forEach(function(el) {
-      el.classList.add('fade-in');
-    });
+  items.forEach(function(item) {
+    var li = document.createElement('li');
+    li.textContent = item;
+    list.appendChild(li);
   });
+}
 
-  if ('IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, {
-      threshold: 0.05,
-      rootMargin: '0px 0px -40px 0px'
-    });
+function buildAccordionHeader(titleText) {
+  var header = document.createElement('button');
+  header.type = 'button';
+  header.className = 'accordion-header';
 
-    document.querySelectorAll('.fade-in').forEach(function(el) {
-      observer.observe(el);
-    });
-  } else {
-    // Fallback: show everything
-    document.querySelectorAll('.fade-in').forEach(function(el) {
-      el.classList.add('visible');
-    });
-  }
-})();
+  var title = document.createElement('h3');
+  title.textContent = titleText;
 
-/* ═══════════════════════════════════════
-   ORG WIRE DIAGRAM
-   ═══════════════════════════════════════ */
+  var chevron = document.createElement('span');
+  chevron.className = 'acc-chevron';
+  chevron.setAttribute('aria-hidden', 'true');
+  chevron.textContent = '\u25b8';
+
+  header.appendChild(title);
+  header.appendChild(chevron);
+  return header;
+}
+
 function drawOrgWires() {
   var dsd = document.getElementById('dsdBox');
   var conn = document.getElementById('dsdConnector');
@@ -113,12 +77,17 @@ function drawOrgWires() {
   requestAnimationFrame(function() {
     var boxes = level.querySelectorAll('.org-wire-box');
     if (boxes.length < 2) return;
-    var first = boxes[0], last = boxes[boxes.length - 1];
+
+    var first = boxes[0];
+    var last = boxes[boxes.length - 1];
     var levelRect = level.getBoundingClientRect();
-    var firstCenter = first.getBoundingClientRect().left + first.getBoundingClientRect().width / 2 - levelRect.left;
-    var lastCenter = last.getBoundingClientRect().left + last.getBoundingClientRect().width / 2 - levelRect.left;
+    var firstRect = first.getBoundingClientRect();
+    var lastRect = last.getBoundingClientRect();
+    var firstCenter = firstRect.left + firstRect.width / 2 - levelRect.left;
+    var lastCenter = lastRect.left + lastRect.width / 2 - levelRect.left;
     var old = level.querySelector('.org-hline-dynamic');
     if (old) old.remove();
+
     var hline = document.createElement('div');
     hline.className = 'org-hline-dynamic';
     hline.style.cssText = 'position:absolute;top:0;height:2px;background:#475569;z-index:0;';
@@ -127,17 +96,14 @@ function drawOrgWires() {
     level.appendChild(hline);
   });
 }
-window.addEventListener('load', drawOrgWires);
-window.addEventListener('resize', debounce(drawOrgWires, 150));
 
-/* ═══════════════════════════════════════
-   ITERATIVE ARROW (Concept ← Exec/Sustain)
-   ═══════════════════════════════════════ */
 function drawIterativeArrow() {
   var svg = document.getElementById('iterativeArrowSvg');
   if (!svg) return;
+
   var steps = document.querySelectorAll('#sdlcPipeline > .step');
-  var concept = steps[1], execSust = steps[3];
+  var concept = steps[1];
+  var execSust = steps[3];
   if (!concept || !execSust) return;
 
   var svgRect = svg.getBoundingClientRect();
@@ -150,7 +116,9 @@ function drawIterativeArrow() {
   var ty = 8;
   var curveY = 50;
 
-  svg.querySelectorAll('.iter-path,.iter-label').forEach(function(el) { el.remove(); });
+  svg.querySelectorAll('.iter-path,.iter-label').forEach(function(el) {
+    el.remove();
+  });
 
   var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   path.classList.add('iter-path');
@@ -162,12 +130,10 @@ function drawIterativeArrow() {
   path.setAttribute('marker-end', 'url(#arrow-iter)');
   svg.appendChild(path);
 
-  var labelX = (sx + tx) / 2;
-  var labelY = curveY + 2;
   var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
   text.classList.add('iter-label');
-  text.setAttribute('x', labelX);
-  text.setAttribute('y', labelY);
+  text.setAttribute('x', (sx + tx) / 2);
+  text.setAttribute('y', curveY + 2);
   text.setAttribute('text-anchor', 'middle');
   text.setAttribute('font-size', '11');
   text.setAttribute('font-weight', '600');
@@ -177,52 +143,52 @@ function drawIterativeArrow() {
   text.textContent = 'As Needed';
   svg.appendChild(text);
 }
-window.addEventListener('load', drawIterativeArrow);
-window.addEventListener('resize', debounce(drawIterativeArrow, 150));
 
-/* ═══════════════════════════════════════
-   IMPL GUIDE VIEW TOGGLE
-   ═══════════════════════════════════════ */
 function showImplView(view) {
-  document.getElementById('implRole').classList.toggle('active', view === 'role');
-  document.getElementById('implTimeline').classList.toggle('active', view === 'timeline');
-  var btns = document.querySelectorAll('.impl-toggle button');
-  btns[0].classList.toggle('active', view === 'role');
-  btns[1].classList.toggle('active', view === 'timeline');
+  var roleView = document.getElementById('implRole');
+  var timelineView = document.getElementById('implTimeline');
+  if (!roleView || !timelineView) return;
+
+  roleView.classList.toggle('active', view === 'role');
+  timelineView.classList.toggle('active', view === 'timeline');
+
+  document.querySelectorAll('.impl-toggle button[data-view]').forEach(function(btn) {
+    var isActive = btn.getAttribute('data-view') === view;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+  });
+
+  scheduleLayoutRefresh();
 }
 
-/* ═══════════════════════════════════════
-   MAPPING LINES (HERMES → Lifecycle)
-   ═══════════════════════════════════════ */
 function drawMappingLines() {
-  const svg = document.getElementById('mappingSvg');
+  var svg = document.getElementById('mappingSvg');
   if (!svg) return;
-  svg.querySelectorAll('.map-line').forEach(el => el.remove());
 
-  const hermesSteps = document.querySelectorAll('#hermesPipeline > .step');
-  const sdlcSteps = document.querySelectorAll('#sdlcPipeline > .step');
+  svg.querySelectorAll('.map-line').forEach(function(el) {
+    el.remove();
+  });
 
-  const mappings = [
-    [0, 0], [1, 0], [1, 1], [3, 2], [4, 3], [4, 4],
-  ];
+  var hermesSteps = document.querySelectorAll('#hermesPipeline > .step');
+  var sdlcSteps = document.querySelectorAll('#sdlcPipeline > .step');
+  var mappings = [[0, 0], [1, 0], [1, 1], [3, 2], [4, 3], [4, 4]];
 
-  mappings.forEach(([hi, si]) => {
-    const hStep = hermesSteps[hi];
-    const sStep = sdlcSteps[si];
+  mappings.forEach(function(pair) {
+    var hStep = hermesSteps[pair[0]];
+    var sStep = sdlcSteps[pair[1]];
     if (!hStep || !sStep) return;
 
-    const hRect = hStep.querySelector('.circle-wrap').getBoundingClientRect();
-    const sRect = sStep.querySelector('.circle-wrap').getBoundingClientRect();
+    var hRect = hStep.querySelector('.circle-wrap').getBoundingClientRect();
+    var sRect = sStep.querySelector('.circle-wrap').getBoundingClientRect();
+    var sx = hRect.left + hRect.width / 2;
+    var sy = hRect.bottom;
+    var tx = sRect.left + sRect.width / 2;
+    var ty = sRect.top;
+    var midY = (sy + ty) / 2 + 10;
 
-    const sx = hRect.left + hRect.width / 2;
-    const sy = hRect.bottom;
-    const tx = sRect.left + sRect.width / 2;
-    const ty = sRect.top;
-    const midY = (sy + ty) / 2 + 10;
-
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    var line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     line.classList.add('map-line');
-    line.setAttribute('d', `M ${sx} ${sy} C ${sx} ${midY}, ${tx} ${midY}, ${tx} ${ty}`);
+    line.setAttribute('d', 'M ' + sx + ' ' + sy + ' C ' + sx + ' ' + midY + ', ' + tx + ' ' + midY + ', ' + tx + ' ' + ty);
     line.setAttribute('fill', 'none');
     line.setAttribute('stroke', '#94a3b8');
     line.setAttribute('stroke-width', '1.5');
@@ -232,44 +198,152 @@ function drawMappingLines() {
     svg.appendChild(line);
   });
 
-  const cgStep = hermesSteps[2];
-  const conceptStep = sdlcSteps[0];
-  const devStep = sdlcSteps[1];
-  if (cgStep && conceptStep && devStep) {
-    const hRect = cgStep.querySelector('.circle-wrap').getBoundingClientRect();
-    const cRect = conceptStep.querySelector('.circle-wrap').getBoundingClientRect();
-    const dRect = devStep.querySelector('.circle-wrap').getBoundingClientRect();
+  var cgStep = hermesSteps[2];
+  var conceptStep = sdlcSteps[0];
+  var devStep = sdlcSteps[1];
+  if (!cgStep || !conceptStep || !devStep) return;
 
-    const sx = hRect.left + hRect.width / 2;
-    const sy = hRect.bottom;
-    const tx = (cRect.right + dRect.left) / 2;
-    const ty = (cRect.top + dRect.top) / 2;
-    const midY = (sy + ty) / 2 + 10;
+  var hRect = cgStep.querySelector('.circle-wrap').getBoundingClientRect();
+  var cRect = conceptStep.querySelector('.circle-wrap').getBoundingClientRect();
+  var dRect = devStep.querySelector('.circle-wrap').getBoundingClientRect();
+  var sx = hRect.left + hRect.width / 2;
+  var sy = hRect.bottom;
+  var tx = (cRect.right + dRect.left) / 2;
+  var ty = (cRect.top + dRect.top) / 2;
+  var midY = (sy + ty) / 2 + 10;
 
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    line.classList.add('map-line');
-    line.setAttribute('d', `M ${sx} ${sy} C ${sx} ${midY}, ${tx} ${midY}, ${tx} ${ty}`);
-    line.setAttribute('fill', 'none');
-    line.setAttribute('stroke', '#7c3aed');
-    line.setAttribute('stroke-width', '2');
-    line.setAttribute('stroke-dasharray', '6,4');
-    line.setAttribute('opacity', '0.7');
-    line.setAttribute('marker-end', 'url(#arrow-map)');
-    svg.appendChild(line);
-  }
+  var line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  line.classList.add('map-line');
+  line.setAttribute('d', 'M ' + sx + ' ' + sy + ' C ' + sx + ' ' + midY + ', ' + tx + ' ' + midY + ', ' + tx + ' ' + ty);
+  line.setAttribute('fill', 'none');
+  line.setAttribute('stroke', '#7c3aed');
+  line.setAttribute('stroke-width', '2');
+  line.setAttribute('stroke-dasharray', '6,4');
+  line.setAttribute('opacity', '0.7');
+  line.setAttribute('marker-end', 'url(#arrow-map)');
+  svg.appendChild(line);
 }
 
-window.addEventListener('load', drawMappingLines);
-window.addEventListener('resize', debounce(drawMappingLines, 150));
+function drawZoomLine() {
+  var svg = document.getElementById('zoomLine');
+  var canvas = document.querySelector('.canvas');
+  var img = document.querySelector('.graphic-frame img');
+  var box = document.querySelector('.zoom-dashed-box');
+  if (!svg || !canvas || !img || !box) return;
 
-/* ═══════════════════════════════════════
-   SCROLL-DOWN BUTTON (for mobile)
-   ═══════════════════════════════════════ */
+  svg.replaceChildren();
+
+  var canvasRect = canvas.getBoundingClientRect();
+  var imgRect = img.getBoundingClientRect();
+  var boxRect = box.getBoundingClientRect();
+  var x = imgRect.left + imgRect.width * 0.42 - canvasRect.left;
+  var y1 = imgRect.top + imgRect.height * 0.90 - canvasRect.top;
+  var y2 = boxRect.top - canvasRect.top;
+
+  var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  line.setAttribute('x1', x);
+  line.setAttribute('y1', y1);
+  line.setAttribute('x2', x);
+  line.setAttribute('y2', y2);
+  line.setAttribute('stroke', '#d97706');
+  line.setAttribute('stroke-width', '2');
+  line.setAttribute('stroke-dasharray', '8,4');
+  svg.appendChild(line);
+}
+
+function redrawDynamicLayouts() {
+  drawOrgWires();
+  drawIterativeArrow();
+  drawMappingLines();
+  drawZoomLine();
+}
+
+var scheduleLayoutRefresh = debounce(redrawDynamicLayouts, 60);
+
+/* Scroll-spy navigation */
+(function() {
+  var navLinks = document.querySelectorAll('#navLinks a[data-section]');
+  var sections = [];
+
+  navLinks.forEach(function(link) {
+    var id = link.getAttribute('data-section');
+    var el = document.getElementById(id);
+    if (el) sections.push({ el: el, link: link });
+  });
+
+  function updateActiveNav() {
+    var navHeight = 80;
+    var current = null;
+
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.getBoundingClientRect().top <= navHeight + 60) {
+        current = sections[i];
+        break;
+      }
+    }
+
+    navLinks.forEach(function(link) {
+      link.classList.remove('active');
+    });
+
+    if (current) current.link.classList.add('active');
+  }
+
+  window.addEventListener('scroll', debounce(updateActiveNav, 50));
+  updateActiveNav();
+})();
+
+/* Scroll animations */
+(function() {
+  var selectors = [
+    '.row', '.psb-section', '.onepager', '.considerations',
+    '.tbd-section', '.sync-section', '.impl-guide',
+    '.role-card', '.impl-section'
+  ];
+
+  selectors.forEach(function(sel) {
+    document.querySelectorAll(sel).forEach(function(el) {
+      el.classList.add('fade-in');
+    });
+  });
+
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.fade-in').forEach(function(el) {
+      el.classList.add('visible');
+    });
+    return;
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.05,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  document.querySelectorAll('.fade-in').forEach(function(el) {
+    observer.observe(el);
+  });
+})();
+
+window.addEventListener('load', drawOrgWires);
+window.addEventListener('load', drawIterativeArrow);
+window.addEventListener('load', drawMappingLines);
+window.addEventListener('load', function() {
+  setTimeout(drawZoomLine, 300);
+});
+window.addEventListener('resize', debounce(redrawDynamicLayouts, 150));
+
+/* Mobile scroll helper */
 (function() {
   var targets = ['psbCycle', 'orgChart', 'meetingOverview', 'considerations', 'syncMatrix', 'safeBackground', 'capLifecycle', 'implGuide'];
-  var labels  = ['PSB Cycle', 'Org Chart', 'Meetings', 'Considerations', 'Sync Matrix', 'SAFe', 'Cap Lifecycle', 'Impl Guide'];
-  var lbl = document.getElementById('scrollLabel');
-  if (!lbl) return;
+  var labels = ['PSB Cycle', 'Org Chart', 'Meetings', 'Considerations', 'Sync Matrix', 'SAFe', 'Cap Lifecycle', 'Impl Guide'];
+  var label = document.getElementById('scrollLabel');
+  if (!label) return;
 
   function isInView(id) {
     var el = document.getElementById(id);
@@ -289,8 +363,7 @@ window.addEventListener('resize', debounce(drawMappingLines, 150));
   }
 
   function updateLabel() {
-    var next = getNextIdx();
-    lbl.textContent = labels[next];
+    label.textContent = labels[getNextIdx()];
   }
 
   window.scrollNext = function() {
@@ -305,95 +378,82 @@ window.addEventListener('resize', debounce(drawMappingLines, 150));
   updateLabel();
 })();
 
-/* ═══════════════════════════════════════
-   ZOOM LINE (capability_lifecycle_process.html)
-   ═══════════════════════════════════════ */
-function drawZoomLine() {
-  var svg = document.getElementById('zoomLine');
-  var canvas = document.querySelector('.canvas');
-  var img = document.querySelector('.graphic-frame img');
-  var box = document.querySelector('.zoom-dashed-box');
-  if (!svg || !canvas || !img || !box) return;
-
-  svg.innerHTML = '';
-  var canvasRect = canvas.getBoundingClientRect();
-  var imgRect = img.getBoundingClientRect();
-  var boxRect = box.getBoundingClientRect();
-
-  var x = imgRect.left + imgRect.width * 0.42 - canvasRect.left;
-  var y1 = imgRect.top + imgRect.height * 0.90 - canvasRect.top;
-  var y2 = boxRect.top - canvasRect.top;
-
-  var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-  line.setAttribute('x1', x);
-  line.setAttribute('y1', y1);
-  line.setAttribute('x2', x);
-  line.setAttribute('y2', y2);
-  line.setAttribute('stroke', '#d97706');
-  line.setAttribute('stroke-width', '2');
-  line.setAttribute('stroke-dasharray', '8,4');
-  svg.appendChild(line);
-}
-window.addEventListener('load', function() { setTimeout(drawZoomLine, 300); });
-window.addEventListener('resize', debounce(drawZoomLine, 150));
-
-/* ═══════════════════════════════════════
-   FEATURE 1: CLICKABLE PIPELINE DRAWERS
-   ═══════════════════════════════════════ */
+/* Pipeline drawers */
 (function() {
-  document.querySelectorAll('.step').forEach(function(step) {
+  document.querySelectorAll('.step').forEach(function(step, index) {
     var drawer = step.querySelector('.step-drawer');
     if (!drawer) return;
-    
-    step.addEventListener('click', function(e) {
-      // Don't trigger if clicking a link inside the drawer
-      if (e.target.closest('.step-drawer')) return;
-      
+
+    if (!drawer.id) drawer.id = 'step-drawer-' + index;
+    drawer.hidden = true;
+    step.setAttribute('role', 'button');
+    step.setAttribute('tabindex', '0');
+    step.setAttribute('aria-controls', drawer.id);
+    step.setAttribute('aria-expanded', 'false');
+
+    function toggleStepDrawer() {
       var wasOpen = drawer.classList.contains('open');
-      
-      // Close all drawers first
-      document.querySelectorAll('.step-drawer.open').forEach(function(d) {
-        d.classList.remove('open');
-        d.closest('.step').classList.remove('active-drawer');
+
+      document.querySelectorAll('.step-drawer.open').forEach(function(openDrawer) {
+        var openStep = openDrawer.closest('.step');
+        openDrawer.classList.remove('open');
+        if (openStep) {
+          openStep.classList.remove('active-drawer');
+          setExpandedState(openStep, openDrawer, false);
+        }
       });
-      
-      // Toggle this one
+
       if (!wasOpen) {
         drawer.classList.add('open');
         step.classList.add('active-drawer');
+        setExpandedState(step, drawer, true);
+      }
+
+      scheduleLayoutRefresh();
+    }
+
+    step.addEventListener('click', function(e) {
+      if (e.target.closest('.step-drawer')) return;
+      toggleStepDrawer();
+    });
+
+    step.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (!e.target.closest('.step-drawer')) {
+          toggleStepDrawer();
+        }
       }
     });
   });
 })();
 
-/* ═══════════════════════════════════════
-   FEATURE 2: INTERACTIVE SPRINT STEPPER
-   ═══════════════════════════════════════ */
+/* Sprint stepper */
 (function() {
   var sprintData = [
     {
-      name: 'Discovery & Framing (Weeks 2–3)',
-      meetings: ['Daily Standup (≤15 min)', 'Sprint kickoff planning'],
+      name: 'Discovery & Framing (Weeks 2-3)',
+      meetings: ['Daily Standup (<=15 min)', 'Sprint kickoff planning'],
       deliverables: ['Technical discovery completed', 'Work estimates finalized', 'Prototypes if needed', 'Sprint-ready backlog']
     },
     {
-      name: 'Dev Sprint 1 (Weeks 4–5)',
-      meetings: ['Daily Standup (≤15 min)', 'AAR w/ DSD & Stakeholders', 'ART back-brief to boss'],
+      name: 'Dev Sprint 1 (Weeks 4-5)',
+      meetings: ['Daily Standup (<=15 min)', 'AAR w/ DSD & Stakeholders', 'ART back-brief to boss'],
       deliverables: ['Sprint 1 increment', 'Updated milestone chart', 'Sprint boundary AAR']
     },
     {
-      name: 'Dev Sprint 2 (Weeks 6–7)',
-      meetings: ['Daily Standup (≤15 min)', 'Scrum of Scrums (~D+35)', 'Product Midpoint Check-in', 'AAR w/ DSD & Stakeholders'],
+      name: 'Dev Sprint 2 (Weeks 6-7)',
+      meetings: ['Daily Standup (<=15 min)', 'Scrum of Scrums (~D+35)', 'Product Midpoint Check-in', 'AAR w/ DSD & Stakeholders'],
       deliverables: ['Sprint 2 increment', 'Midpoint assessment', 'Process adjustments documented']
     },
     {
-      name: 'Dev Sprint 3 (Weeks 8–9)',
-      meetings: ['Daily Standup (≤15 min)', 'AAR w/ DSD & Stakeholders'],
+      name: 'Dev Sprint 3 (Weeks 8-9)',
+      meetings: ['Daily Standup (<=15 min)', 'AAR w/ DSD & Stakeholders'],
       deliverables: ['Sprint 3 increment', 'Integration testing', 'Updated milestone chart']
     },
     {
-      name: 'Dev Sprint 4 (Weeks 10–11)',
-      meetings: ['Daily Standup (≤15 min)', 'AAR w/ DSD & Stakeholders'],
+      name: 'Dev Sprint 4 (Weeks 10-11)',
+      meetings: ['Daily Standup (<=15 min)', 'AAR w/ DSD & Stakeholders'],
       deliverables: ['Feature completion', 'Dev freeze before demo', 'Bug fixes only', 'Demo materials prepped']
     },
     {
@@ -408,69 +468,104 @@ window.addEventListener('resize', debounce(drawZoomLine, 150));
   if (!panel || blocks.length === 0) return;
 
   blocks.forEach(function(block, index) {
-    block.addEventListener('click', function() {
+    block.setAttribute('role', 'button');
+    block.setAttribute('tabindex', '0');
+    block.setAttribute('aria-expanded', 'false');
+
+    function toggleSprintPanel() {
       var wasActive = block.classList.contains('active-sprint');
-      
-      // Remove all active
-      blocks.forEach(function(b) { b.classList.remove('active-sprint'); });
-      
+
+      blocks.forEach(function(other) {
+        other.classList.remove('active-sprint');
+        other.setAttribute('aria-expanded', 'false');
+      });
+
       if (wasActive) {
         panel.classList.remove('open');
+        panel.style.maxHeight = '0px';
+        scheduleLayoutRefresh();
         return;
       }
-      
-      block.classList.add('active-sprint');
+
       var data = sprintData[index];
       if (!data) return;
-      
+
+      block.classList.add('active-sprint');
+      block.setAttribute('aria-expanded', 'true');
       document.getElementById('sprintDetailTitle').textContent = data.name;
-      
-      var meetingsUl = document.getElementById('sprintMeetingsList');
-      meetingsUl.innerHTML = data.meetings.map(function(m) { return '<li>' + m + '</li>'; }).join('');
-      
-      var deliverablesUl = document.getElementById('sprintDeliverablesList');
-      deliverablesUl.innerHTML = data.deliverables.map(function(d) { return '<li>' + d + '</li>'; }).join('');
-      
+      fillList(document.getElementById('sprintMeetingsList'), data.meetings);
+      fillList(document.getElementById('sprintDeliverablesList'), data.deliverables);
+
       panel.classList.add('open');
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+      scheduleLayoutRefresh();
+    }
+
+    block.addEventListener('click', toggleSprintPanel);
+    block.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSprintPanel();
+      }
     });
   });
 })();
 
-/* ═══════════════════════════════════════
-   FEATURE 3: COLLAPSIBLE ORG CHART
-   ═══════════════════════════════════════ */
+/* Collapsible org chart */
 (function() {
-  // Find all org-wire-box elements in the division level (not DSD/CTO)
   var divisionBoxes = document.querySelectorAll('.org-wire-level.has-hline .org-wire-box');
-  
-  divisionBoxes.forEach(function(box) {
-    var items = box.querySelector('.owb-items');
-    var extraDivs = [];
-    // Gather child elements after owb-sub that aren't owb-title or owb-sub
+
+  divisionBoxes.forEach(function(box, index) {
     var children = Array.from(box.children);
     var collapsible = [];
     var foundSub = false;
+
     children.forEach(function(child) {
-      if (child.classList && child.classList.contains('owb-sub')) foundSub = true;
-      else if (foundSub) collapsible.push(child);
+      if (child.classList && child.classList.contains('owb-sub')) {
+        foundSub = true;
+      } else if (foundSub) {
+        collapsible.push(child);
+      }
     });
-    
+
     if (collapsible.length === 0) return;
-    
-    // Create wrapper
+
     var body = document.createElement('div');
     body.className = 'org-division-body';
+    body.id = 'org-division-body-' + index;
+    body.hidden = true;
+
     collapsible.forEach(function(el) {
       body.appendChild(el);
     });
     box.appendChild(body);
-    
-    // Make the header clickable
+
     box.classList.add('org-division-toggle');
+    box.setAttribute('role', 'button');
+    box.setAttribute('tabindex', '0');
+    box.setAttribute('aria-controls', body.id);
+    box.setAttribute('aria-expanded', 'false');
+
+    function toggleOrgBox(forceOpen) {
+      var shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : !box.classList.contains('expanded');
+      box.classList.toggle('expanded', shouldOpen);
+      body.classList.toggle('open', shouldOpen);
+      setExpandedState(box, body, shouldOpen);
+      scheduleLayoutRefresh();
+    }
+
     box.addEventListener('click', function() {
-      box.classList.toggle('expanded');
-      body.classList.toggle('open');
+      toggleOrgBox();
     });
+
+    box.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleOrgBox();
+      }
+    });
+
+    box._toggleOrgBox = toggleOrgBox;
   });
 })();
 
@@ -478,81 +573,53 @@ window.toggleAllOrg = function() {
   var boxes = document.querySelectorAll('.org-division-toggle');
   var btn = document.getElementById('orgExpandBtn');
   var anyCollapsed = false;
-  boxes.forEach(function(b) {
-    if (!b.classList.contains('expanded')) anyCollapsed = true;
+
+  boxes.forEach(function(box) {
+    if (!box.classList.contains('expanded')) anyCollapsed = true;
   });
-  
-  boxes.forEach(function(b) {
-    var body = b.querySelector('.org-division-body');
-    if (anyCollapsed) {
-      b.classList.add('expanded');
-      if (body) body.classList.add('open');
-    } else {
-      b.classList.remove('expanded');
-      if (body) body.classList.remove('open');
+
+  boxes.forEach(function(box) {
+    if (typeof box._toggleOrgBox === 'function') {
+      box._toggleOrgBox(anyCollapsed);
     }
   });
-  
+
   if (btn) btn.textContent = anyCollapsed ? 'Collapse All' : 'Expand All';
 };
 
-/* ═══════════════════════════════════════
-   FEATURE 4: MEETING TAB FILTERING
-   ═══════════════════════════════════════ */
 window.showMeetingTab = function(tab) {
   var table = document.getElementById('meetingTable');
   if (!table) return;
-  var rows = table.querySelectorAll('tbody tr');
-  
-  // Update active tab
+
   document.querySelectorAll('.meeting-tab').forEach(function(t) {
-    t.classList.toggle('active', t.getAttribute('data-tab') === tab);
+    var isActive = t.getAttribute('data-tab') === tab;
+    t.classList.toggle('active', isActive);
+    t.setAttribute('aria-pressed', isActive ? 'true' : 'false');
   });
-  
-  // Phase mapping by row index
-  var rowPhases = {
-    0: 'psb', 1: 'psb', 2: 'psb', 3: 'psb', 4: 'psb',  // PSB week meetings
-    5: 'sprint',  // Daily Standup
-    6: 'midpoint', 7: 'midpoint',  // Scrum of Scrums, Midpoint Check-in
-    8: 'sprint',  // Sprint Boundary AAR
-    9: 'sprint',  // AAR w/ DSD
-    10: 'sprint', // ART Back-Brief
-    11: 'demo', 12: 'demo'  // Demo, Retro
-  };
-  
-  rows.forEach(function(row, i) {
-    var phase = rowPhases[i] || 'sprint';
-    if (tab === 'all') {
-      row.style.display = '';
-    } else {
-      row.style.display = (phase === tab) ? '' : 'none';
-    }
+
+  table.querySelectorAll('tbody tr').forEach(function(row) {
+    var phase = row.getAttribute('data-phase');
+    row.style.display = (tab === 'all' || phase === tab) ? '' : 'none';
   });
 };
 
-/* ═══════════════════════════════════════
-   FEATURE 5: SYNC MATRIX ROLE FILTER
-   ═══════════════════════════════════════ */
 window.filterSyncRole = function(role) {
   var table = document.querySelector('.sync-table');
   if (!table) return;
-  var rows = table.querySelectorAll('tbody tr');
-  
-  // Update active button
+
   document.querySelectorAll('.sync-filter-btn').forEach(function(btn) {
-    btn.classList.toggle('active', btn.getAttribute('data-role') === role);
+    var isActive = btn.getAttribute('data-role') === role;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
   });
-  
-  if (role === 'all') {
-    rows.forEach(function(row) {
+
+  table.querySelectorAll('tbody tr').forEach(function(row) {
+    if (role === 'all') {
       row.classList.remove('dimmed', 'highlighted');
-    });
-    return;
-  }
-  
-  var idx = parseInt(role);
-  rows.forEach(function(row, i) {
-    if (i === idx) {
+      return;
+    }
+
+    if (row.getAttribute('data-role') === role) {
       row.classList.remove('dimmed');
       row.classList.add('highlighted');
     } else {
@@ -562,17 +629,14 @@ window.filterSyncRole = function(role) {
   });
 };
 
-/* ═══════════════════════════════════════
-   FEATURE 6: COLLAPSIBLE CONSIDERATIONS
-   ═══════════════════════════════════════ */
+/* Collapsible considerations */
 (function() {
   var considerCols = document.querySelectorAll('.consider-col');
-  
-  considerCols.forEach(function(col) {
-    var headings = col.querySelectorAll('h3');
+
+  considerCols.forEach(function(col, colIndex) {
     var groups = [];
     var current = null;
-    
+
     Array.from(col.children).forEach(function(child) {
       if (child.tagName === 'H3') {
         if (current) groups.push(current);
@@ -582,35 +646,112 @@ window.filterSyncRole = function(role) {
       }
     });
     if (current) groups.push(current);
-    
-    // Clear the column and rebuild with accordions
-    col.innerHTML = '';
-    
+
+    col.replaceChildren();
+
     groups.forEach(function(group, idx) {
+      var isOpen = idx === 0;
       var section = document.createElement('div');
-      section.className = 'accordion-section' + (idx === 0 ? ' open' : '');
-      
-      var header = document.createElement('div');
-      header.className = 'accordion-header';
-      header.innerHTML = '<h3>' + group.heading.textContent + '</h3><span class="acc-chevron">▸</span>';
-      
+      section.className = 'accordion-section' + (isOpen ? ' open' : '');
+
+      var header = buildAccordionHeader(group.heading.textContent);
       var body = document.createElement('div');
       body.className = 'accordion-body';
+      body.id = 'accordion-body-' + colIndex + '-' + idx;
+      body.hidden = !isOpen;
+
       var inner = document.createElement('div');
       inner.className = 'accordion-body-inner';
       group.content.forEach(function(el) {
         inner.appendChild(el.cloneNode(true));
       });
       body.appendChild(inner);
-      
+
+      header.setAttribute('aria-controls', body.id);
       section.appendChild(header);
       section.appendChild(body);
-      
+      setExpandedState(header, body, isOpen);
+
       header.addEventListener('click', function() {
-        section.classList.toggle('open');
+        var nextOpen = !section.classList.contains('open');
+        section.classList.toggle('open', nextOpen);
+        setExpandedState(header, body, nextOpen);
+        scheduleLayoutRefresh();
       });
-      
+
       col.appendChild(section);
     });
   });
 })();
+
+/* Wiring for buttons without inline handlers */
+(function() {
+  var navBrand = document.getElementById('navBrand');
+  if (navBrand) {
+    navBrand.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  var orgExpandBtn = document.getElementById('orgExpandBtn');
+  if (orgExpandBtn) {
+    orgExpandBtn.addEventListener('click', function() {
+      window.toggleAllOrg();
+    });
+  }
+
+  var meetingTabs = document.getElementById('meetingTabs');
+  if (meetingTabs) {
+    var tabs = Array.from(meetingTabs.querySelectorAll('.meeting-tab'));
+    tabs.forEach(function(tab, index) {
+      tab.setAttribute('aria-pressed', tab.classList.contains('active') ? 'true' : 'false');
+      tab.addEventListener('click', function() {
+        window.showMeetingTab(tab.getAttribute('data-tab'));
+      });
+      tab.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          var delta = e.key === 'ArrowRight' ? 1 : -1;
+          tabs[(index + delta + tabs.length) % tabs.length].focus();
+        }
+      });
+    });
+  }
+
+  var syncFilterBar = document.getElementById('syncFilterBar');
+  if (syncFilterBar) {
+    syncFilterBar.querySelectorAll('.sync-filter-btn').forEach(function(btn) {
+      btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
+      btn.addEventListener('click', function() {
+        window.filterSyncRole(btn.getAttribute('data-role'));
+      });
+    });
+  }
+
+  document.querySelectorAll('.impl-toggle button[data-view]').forEach(function(btn) {
+    btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
+    btn.addEventListener('click', function() {
+      showImplView(btn.getAttribute('data-view'));
+    });
+  });
+
+  var scrollBtn = document.getElementById('scrollBtn');
+  if (scrollBtn) {
+    scrollBtn.addEventListener('click', function() {
+      window.scrollNext();
+    });
+  }
+})();
+
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(function() {
+    scheduleLayoutRefresh();
+  });
+}
+
+if ('ResizeObserver' in window) {
+  var resizeTarget = document.querySelector('.main-content') || document.body;
+  var observer = new ResizeObserver(scheduleLayoutRefresh);
+  observer.observe(resizeTarget);
+}

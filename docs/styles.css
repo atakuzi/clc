@@ -1445,7 +1445,6 @@ body {
   max-width: 200px;
 }
 .step-drawer.open {
-  max-height: 500px;
   opacity: 1;
 }
 .step-drawer-inner {
@@ -1507,7 +1506,6 @@ body {
   margin-top: 0;
 }
 .sprint-detail-panel.open {
-  max-height: 400px;
   opacity: 1;
   margin-top: 12px;
 }
@@ -1573,9 +1571,6 @@ body {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.org-division-body.open {
-  max-height: 600px;
 }
 .org-expand-all {
   display: inline-flex;
@@ -1757,6 +1752,11 @@ body {
   cursor: pointer;
   user-select: none;
   transition: background 0.2s;
+  width: 100%;
+  border: none;
+  background: var(--bg-surface);
+  text-align: left;
+  font-family: inherit;
 }
 .accordion-header:hover { background: var(--bg-subtle); }
 .accordion-header h3 {
@@ -1779,7 +1779,6 @@ body {
   overflow: hidden;
   transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.accordion-section.open .accordion-body { max-height: 800px; }
 .accordion-body-inner {
   padding: 0 18px 16px;
   border-top: 1px solid var(--border-default);
@@ -1793,6 +1792,20 @@ body {
   padding: 2px 0;
 }
 .accordion-body-inner li strong { color: var(--text-primary); }
+
+.step:focus-visible,
+.sprint-block:focus-visible,
+.org-division-toggle:focus-visible,
+.accordion-header:focus-visible,
+.meeting-tab:focus-visible,
+.sync-filter-btn:focus-visible,
+.impl-toggle button:focus-visible,
+.org-expand-all:focus-visible,
+.scroll-nav button:focus-visible,
+.nav-brand:focus-visible {
+  outline: 2px solid var(--c-concept);
+  outline-offset: 3px;
+}
 
 /* ── 7. Phase Progress Bar ── */
 .phase-progress {
