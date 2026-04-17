@@ -1,5 +1,94 @@
+/* ═══════════════════════════════════════════════
+   ODT Capability Lifecycle — Main JavaScript
+   Navigation, Scroll-Spy, Animations, SVG Drawing
+   ═══════════════════════════════════════════════ */
 
-/* Draw org wire: connector + hline anchored under DSD box */
+/* ── Debounce utility ── */
+function debounce(fn, delay) {
+  var timer;
+  return function() {
+    clearTimeout(timer);
+    timer = setTimeout(fn, delay);
+  };
+}
+
+/* ═══════════════════════════════════════
+   SCROLL-SPY NAVIGATION
+   ═══════════════════════════════════════ */
+(function() {
+  var navLinks = document.querySelectorAll('#navLinks a[data-section]');
+  var sections = [];
+
+  navLinks.forEach(function(link) {
+    var id = link.getAttribute('data-section');
+    var el = document.getElementById(id);
+    if (el) sections.push({ id: id, el: el, link: link });
+  });
+
+  function updateActiveNav() {
+    var scrollY = window.scrollY;
+    var navHeight = 80; // nav height + offset
+    var current = null;
+
+    for (var i = sections.length - 1; i >= 0; i--) {
+      var rect = sections[i].el.getBoundingClientRect();
+      if (rect.top <= navHeight + 60) {
+        current = sections[i];
+        break;
+      }
+    }
+
+    navLinks.forEach(function(link) { link.classList.remove('active'); });
+    if (current) current.link.classList.add('active');
+  }
+
+  window.addEventListener('scroll', debounce(updateActiveNav, 50));
+  updateActiveNav();
+})();
+
+/* ═══════════════════════════════════════
+   SCROLL ANIMATIONS (Intersection Observer)
+   ═══════════════════════════════════════ */
+(function() {
+  // Add fade-in class to major sections
+  var selectors = [
+    '.row', '.psb-section', '.onepager', '.considerations',
+    '.tbd-section', '.sync-section', '.impl-guide',
+    '.role-card', '.impl-section'
+  ];
+
+  selectors.forEach(function(sel) {
+    document.querySelectorAll(sel).forEach(function(el) {
+      el.classList.add('fade-in');
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.05,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    document.querySelectorAll('.fade-in').forEach(function(el) {
+      observer.observe(el);
+    });
+  } else {
+    // Fallback: show everything
+    document.querySelectorAll('.fade-in').forEach(function(el) {
+      el.classList.add('visible');
+    });
+  }
+})();
+
+/* ═══════════════════════════════════════
+   ORG WIRE DIAGRAM
+   ═══════════════════════════════════════ */
 function drawOrgWires() {
   var dsd = document.getElementById('dsdBox');
   var conn = document.getElementById('dsdConnector');
@@ -11,19 +100,16 @@ function drawOrgWires() {
   var dsdRect = dsd.getBoundingClientRect();
   var dsdCenterX = dsdRect.left + dsdRect.width / 2 - wireRect.left;
 
-  // 1. Position vertical connector under DSD center
   conn.style.alignSelf = 'flex-start';
   conn.style.position = 'relative';
   conn.style.left = dsdCenterX + 'px';
   conn.style.transform = 'translateX(-50%)';
 
-  // 2. Center subordinate level under DSD
   var levelWidth = level.scrollWidth;
   var desiredLeft = dsdCenterX - levelWidth / 2;
   level.style.marginLeft = desiredLeft + 'px';
   level.style.marginRight = 'auto';
 
-  // 3. Draw hline after repositioning (use requestAnimationFrame for layout settle)
   requestAnimationFrame(function() {
     var boxes = level.querySelectorAll('.org-wire-box');
     if (boxes.length < 2) return;
@@ -35,16 +121,18 @@ function drawOrgWires() {
     if (old) old.remove();
     var hline = document.createElement('div');
     hline.className = 'org-hline-dynamic';
-    hline.style.cssText = 'position:absolute;top:0;height:2px;background:#1a2a3a;z-index:0;';
+    hline.style.cssText = 'position:absolute;top:0;height:2px;background:#0f172a;z-index:0;';
     hline.style.left = firstCenter + 'px';
     hline.style.width = (lastCenter - firstCenter) + 'px';
     level.appendChild(hline);
   });
 }
 window.addEventListener('load', drawOrgWires);
-window.addEventListener('resize', drawOrgWires);
+window.addEventListener('resize', debounce(drawOrgWires, 150));
 
-/* Draw dashed curved arrow from Exec/Sustain back to Concept */
+/* ═══════════════════════════════════════
+   ITERATIVE ARROW (Concept ← Exec/Sustain)
+   ═══════════════════════════════════════ */
 function drawIterativeArrow() {
   var svg = document.getElementById('iterativeArrowSvg');
   if (!svg) return;
@@ -62,20 +150,18 @@ function drawIterativeArrow() {
   var ty = 8;
   var curveY = 50;
 
-  // Remove old elements
   svg.querySelectorAll('.iter-path,.iter-label').forEach(function(el) { el.remove(); });
 
   var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   path.classList.add('iter-path');
   path.setAttribute('d', 'M ' + sx + ' ' + sy + ' C ' + sx + ' ' + curveY + ', ' + tx + ' ' + curveY + ', ' + tx + ' ' + ty);
   path.setAttribute('fill', 'none');
-  path.setAttribute('stroke', '#2D6A8F');
+  path.setAttribute('stroke', '#2563eb');
   path.setAttribute('stroke-width', '2');
   path.setAttribute('stroke-dasharray', '8,4');
   path.setAttribute('marker-end', 'url(#arrow-iter)');
   svg.appendChild(path);
 
-  // "As Needed" label at the midpoint of the curve
   var labelX = (sx + tx) / 2;
   var labelY = curveY + 2;
   var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
@@ -86,13 +172,17 @@ function drawIterativeArrow() {
   text.setAttribute('font-size', '11');
   text.setAttribute('font-weight', '600');
   text.setAttribute('font-style', 'italic');
-  text.setAttribute('fill', '#2D6A8F');
+  text.setAttribute('fill', '#2563eb');
+  text.setAttribute('font-family', 'Inter, sans-serif');
   text.textContent = 'As Needed';
   svg.appendChild(text);
 }
 window.addEventListener('load', drawIterativeArrow);
-window.addEventListener('resize', drawIterativeArrow);
+window.addEventListener('resize', debounce(drawIterativeArrow, 150));
 
+/* ═══════════════════════════════════════
+   IMPL GUIDE VIEW TOGGLE
+   ═══════════════════════════════════════ */
 function showImplView(view) {
   document.getElementById('implRole').classList.toggle('active', view === 'role');
   document.getElementById('implTimeline').classList.toggle('active', view === 'timeline');
@@ -101,27 +191,19 @@ function showImplView(view) {
   btns[1].classList.toggle('active', view === 'timeline');
 }
 
-
-
-
+/* ═══════════════════════════════════════
+   MAPPING LINES (HERMES → Lifecycle)
+   ═══════════════════════════════════════ */
 function drawMappingLines() {
   const svg = document.getElementById('mappingSvg');
+  if (!svg) return;
   svg.querySelectorAll('.map-line').forEach(el => el.remove());
 
   const hermesSteps = document.querySelectorAll('#hermesPipeline > .step');
   const sdlcSteps = document.querySelectorAll('#sdlcPipeline > .step');
 
-  // Simplified mapping lines:
-  // Submit+Scope (0,1) → Concept (0)
-  // Execute (3) → Dev (1)
-  // Scale (4) → Maint (2) + EOL (3)
   const mappings = [
-    [0, 0],  // Submit → Intake
-    [1, 0],  // Scope & Review → Intake & Scoping
-    [1, 1],  // Scope → Concept
-    [3, 2],  // Execute → Dev
-    [4, 3],  // Scale → Exec/Sustain
-    [4, 4],  // Scale → Evolution/EOL
+    [0, 0], [1, 0], [1, 1], [3, 2], [4, 3], [4, 4],
   ];
 
   mappings.forEach(([hi, si]) => {
@@ -142,15 +224,14 @@ function drawMappingLines() {
     line.classList.add('map-line');
     line.setAttribute('d', `M ${sx} ${sy} C ${sx} ${midY}, ${tx} ${midY}, ${tx} ${ty}`);
     line.setAttribute('fill', 'none');
-    line.setAttribute('stroke', '#7a8a9a');
-    line.setAttribute('stroke-width', '2');
+    line.setAttribute('stroke', '#94a3b8');
+    line.setAttribute('stroke-width', '1.5');
     line.setAttribute('stroke-dasharray', '6,4');
-    line.setAttribute('opacity', '0.75');
+    line.setAttribute('opacity', '0.6');
     line.setAttribute('marker-end', 'url(#arrow-map)');
     svg.appendChild(line);
   });
 
-  // CG Priority → gate between Concept and Dev
   const cgStep = hermesSteps[2];
   const conceptStep = sdlcSteps[0];
   const devStep = sdlcSteps[1];
@@ -169,42 +250,41 @@ function drawMappingLines() {
     line.classList.add('map-line');
     line.setAttribute('d', `M ${sx} ${sy} C ${sx} ${midY}, ${tx} ${midY}, ${tx} ${ty}`);
     line.setAttribute('fill', 'none');
-    line.setAttribute('stroke', '#3C1361');
-    line.setAttribute('stroke-width', '2.5');
+    line.setAttribute('stroke', '#7c3aed');
+    line.setAttribute('stroke-width', '2');
     line.setAttribute('stroke-dasharray', '6,4');
-    line.setAttribute('opacity', '0.85');
+    line.setAttribute('opacity', '0.7');
     line.setAttribute('marker-end', 'url(#arrow-map)');
     svg.appendChild(line);
   }
 }
 
 window.addEventListener('load', drawMappingLines);
-window.addEventListener('resize', drawMappingLines);
+window.addEventListener('resize', debounce(drawMappingLines, 150));
 
-
+/* ═══════════════════════════════════════
+   SCROLL-DOWN BUTTON (for mobile)
+   ═══════════════════════════════════════ */
 (function() {
   var targets = ['psbCycle', 'orgChart', 'meetingOverview', 'considerations', 'syncMatrix', 'safeBackground', 'capLifecycle', 'implGuide'];
   var labels  = ['PSB Cycle', 'Org Chart', 'Meetings', 'Considerations', 'Sync Matrix', 'SAFe', 'Cap Lifecycle', 'Impl Guide'];
   var lbl = document.getElementById('scrollLabel');
+  if (!lbl) return;
 
   function isInView(id) {
     var el = document.getElementById(id);
     if (!el) return false;
     var rect = el.getBoundingClientRect();
-    // Consider "in view" if the top is within the upper half of the viewport
     return rect.top >= -50 && rect.top < window.innerHeight * 0.5;
   }
 
   function getNextIdx() {
-    // Find the first target that is NOT currently in view
     for (var i = 0; i < targets.length; i++) {
       if (!isInView(targets[i])) {
-        // Check if this one is below current scroll position
         var el = document.getElementById(targets[i]);
         if (el && el.getBoundingClientRect().top > 50) return i;
       }
     }
-    // All in view or all above — wrap to first
     return 0;
   }
 
@@ -217,16 +297,7 @@ window.addEventListener('resize', drawMappingLines);
     var idx = getNextIdx();
     var el = document.getElementById(targets[idx]);
     if (!el) return;
-    // Center the meeting overview in the viewport; others align to top
-    if (targets[idx] === 'meetingOverview') {
-      // Find the containing onepager div to center the whole table
-      var container = el.closest('.onepager') || el;
-      var rect = container.getBoundingClientRect();
-      var offset = window.scrollY + rect.top - (window.innerHeight - rect.height) / 2;
-      window.scrollTo({ top: Math.max(0, offset), behavior: 'smooth' });
-    } else {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     setTimeout(updateLabel, 400);
   };
 
@@ -234,8 +305,9 @@ window.addEventListener('resize', drawMappingLines);
   updateLabel();
 })();
 
-/* scripts from capability_lifecycle_process.html */
-
+/* ═══════════════════════════════════════
+   ZOOM LINE (capability_lifecycle_process.html)
+   ═══════════════════════════════════════ */
 function drawZoomLine() {
   var svg = document.getElementById('zoomLine');
   var canvas = document.querySelector('.canvas');
@@ -248,13 +320,8 @@ function drawZoomLine() {
   var imgRect = img.getBoundingClientRect();
   var boxRect = box.getBoundingClientRect();
 
-  // X: center of Development(SAFe) phase on PNG (~42% from left of image)
   var x = imgRect.left + imgRect.width * 0.42 - canvasRect.left;
-
-  // Y start: bottom of the phase boxes (~93% down the PNG)
   var y1 = imgRect.top + imgRect.height * 0.90 - canvasRect.top;
-
-  // Y end: top of the dashed box
   var y2 = boxRect.top - canvasRect.top;
 
   var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
@@ -262,10 +329,10 @@ function drawZoomLine() {
   line.setAttribute('y1', y1);
   line.setAttribute('x2', x);
   line.setAttribute('y2', y2);
-  line.setAttribute('stroke', '#d4820a');
+  line.setAttribute('stroke', '#d97706');
   line.setAttribute('stroke-width', '2');
   line.setAttribute('stroke-dasharray', '8,4');
   svg.appendChild(line);
 }
 window.addEventListener('load', function() { setTimeout(drawZoomLine, 300); });
-window.addEventListener('resize', drawZoomLine);
+window.addEventListener('resize', debounce(drawZoomLine, 150));
