@@ -336,3 +336,281 @@ function drawZoomLine() {
 }
 window.addEventListener('load', function() { setTimeout(drawZoomLine, 300); });
 window.addEventListener('resize', debounce(drawZoomLine, 150));
+
+/* ═══════════════════════════════════════
+   FEATURE 1: CLICKABLE PIPELINE DRAWERS
+   ═══════════════════════════════════════ */
+(function() {
+  document.querySelectorAll('.step').forEach(function(step) {
+    var drawer = step.querySelector('.step-drawer');
+    if (!drawer) return;
+    
+    step.addEventListener('click', function(e) {
+      // Don't trigger if clicking a link inside the drawer
+      if (e.target.closest('.step-drawer')) return;
+      
+      var wasOpen = drawer.classList.contains('open');
+      
+      // Close all drawers first
+      document.querySelectorAll('.step-drawer.open').forEach(function(d) {
+        d.classList.remove('open');
+        d.closest('.step').classList.remove('active-drawer');
+      });
+      
+      // Toggle this one
+      if (!wasOpen) {
+        drawer.classList.add('open');
+        step.classList.add('active-drawer');
+      }
+    });
+  });
+})();
+
+/* ═══════════════════════════════════════
+   FEATURE 2: INTERACTIVE SPRINT STEPPER
+   ═══════════════════════════════════════ */
+(function() {
+  var sprintData = [
+    {
+      name: 'Discovery & Framing (Weeks 2–3)',
+      meetings: ['Daily Standup (≤15 min)', 'Sprint kickoff planning'],
+      deliverables: ['Technical discovery completed', 'Work estimates finalized', 'Prototypes if needed', 'Sprint-ready backlog']
+    },
+    {
+      name: 'Dev Sprint 1 (Weeks 4–5)',
+      meetings: ['Daily Standup (≤15 min)', 'AAR w/ DSD & Stakeholders', 'ART back-brief to boss'],
+      deliverables: ['Sprint 1 increment', 'Updated milestone chart', 'Sprint boundary AAR']
+    },
+    {
+      name: 'Dev Sprint 2 (Weeks 6–7)',
+      meetings: ['Daily Standup (≤15 min)', 'Scrum of Scrums (~D+35)', 'Product Midpoint Check-in', 'AAR w/ DSD & Stakeholders'],
+      deliverables: ['Sprint 2 increment', 'Midpoint assessment', 'Process adjustments documented']
+    },
+    {
+      name: 'Dev Sprint 3 (Weeks 8–9)',
+      meetings: ['Daily Standup (≤15 min)', 'AAR w/ DSD & Stakeholders'],
+      deliverables: ['Sprint 3 increment', 'Integration testing', 'Updated milestone chart']
+    },
+    {
+      name: 'Dev Sprint 4 (Weeks 10–11)',
+      meetings: ['Daily Standup (≤15 min)', 'AAR w/ DSD & Stakeholders'],
+      deliverables: ['Feature completion', 'Dev freeze before demo', 'Bug fixes only', 'Demo materials prepped']
+    },
+    {
+      name: 'Demo / Retro (Week 12)',
+      meetings: ['Product Demo (PMs lead)', 'Cycle Retro / AAR (all leads + DSD Director)'],
+      deliverables: ['Working capability demonstrated', 'Feedback categorized: fix now / next cycle / backlog', 'Invest/divest/pivot decisions', 'Lessons learned documented']
+    }
+  ];
+
+  var blocks = document.querySelectorAll('.sprint-bar .sprint-block');
+  var panel = document.getElementById('sprintDetailPanel');
+  if (!panel || blocks.length === 0) return;
+
+  blocks.forEach(function(block, index) {
+    block.addEventListener('click', function() {
+      var wasActive = block.classList.contains('active-sprint');
+      
+      // Remove all active
+      blocks.forEach(function(b) { b.classList.remove('active-sprint'); });
+      
+      if (wasActive) {
+        panel.classList.remove('open');
+        return;
+      }
+      
+      block.classList.add('active-sprint');
+      var data = sprintData[index];
+      if (!data) return;
+      
+      document.getElementById('sprintDetailTitle').textContent = data.name;
+      
+      var meetingsUl = document.getElementById('sprintMeetingsList');
+      meetingsUl.innerHTML = data.meetings.map(function(m) { return '<li>' + m + '</li>'; }).join('');
+      
+      var deliverablesUl = document.getElementById('sprintDeliverablesList');
+      deliverablesUl.innerHTML = data.deliverables.map(function(d) { return '<li>' + d + '</li>'; }).join('');
+      
+      panel.classList.add('open');
+    });
+  });
+})();
+
+/* ═══════════════════════════════════════
+   FEATURE 3: COLLAPSIBLE ORG CHART
+   ═══════════════════════════════════════ */
+(function() {
+  // Find all org-wire-box elements in the division level (not DSD/CTO)
+  var divisionBoxes = document.querySelectorAll('.org-wire-level.has-hline .org-wire-box');
+  
+  divisionBoxes.forEach(function(box) {
+    var items = box.querySelector('.owb-items');
+    var extraDivs = [];
+    // Gather child elements after owb-sub that aren't owb-title or owb-sub
+    var children = Array.from(box.children);
+    var collapsible = [];
+    var foundSub = false;
+    children.forEach(function(child) {
+      if (child.classList && child.classList.contains('owb-sub')) foundSub = true;
+      else if (foundSub) collapsible.push(child);
+    });
+    
+    if (collapsible.length === 0) return;
+    
+    // Create wrapper
+    var body = document.createElement('div');
+    body.className = 'org-division-body';
+    collapsible.forEach(function(el) {
+      body.appendChild(el);
+    });
+    box.appendChild(body);
+    
+    // Make the header clickable
+    box.classList.add('org-division-toggle');
+    box.addEventListener('click', function() {
+      box.classList.toggle('expanded');
+      body.classList.toggle('open');
+    });
+  });
+})();
+
+window.toggleAllOrg = function() {
+  var boxes = document.querySelectorAll('.org-division-toggle');
+  var btn = document.getElementById('orgExpandBtn');
+  var anyCollapsed = false;
+  boxes.forEach(function(b) {
+    if (!b.classList.contains('expanded')) anyCollapsed = true;
+  });
+  
+  boxes.forEach(function(b) {
+    var body = b.querySelector('.org-division-body');
+    if (anyCollapsed) {
+      b.classList.add('expanded');
+      if (body) body.classList.add('open');
+    } else {
+      b.classList.remove('expanded');
+      if (body) body.classList.remove('open');
+    }
+  });
+  
+  if (btn) btn.textContent = anyCollapsed ? 'Collapse All' : 'Expand All';
+};
+
+/* ═══════════════════════════════════════
+   FEATURE 4: MEETING TAB FILTERING
+   ═══════════════════════════════════════ */
+window.showMeetingTab = function(tab) {
+  var table = document.getElementById('meetingTable');
+  if (!table) return;
+  var rows = table.querySelectorAll('tbody tr');
+  
+  // Update active tab
+  document.querySelectorAll('.meeting-tab').forEach(function(t) {
+    t.classList.toggle('active', t.getAttribute('data-tab') === tab);
+  });
+  
+  // Phase mapping by row index
+  var rowPhases = {
+    0: 'psb', 1: 'psb', 2: 'psb', 3: 'psb', 4: 'psb',  // PSB week meetings
+    5: 'sprint',  // Daily Standup
+    6: 'midpoint', 7: 'midpoint',  // Scrum of Scrums, Midpoint Check-in
+    8: 'sprint',  // Sprint Boundary AAR
+    9: 'sprint',  // AAR w/ DSD
+    10: 'sprint', // ART Back-Brief
+    11: 'demo', 12: 'demo'  // Demo, Retro
+  };
+  
+  rows.forEach(function(row, i) {
+    var phase = rowPhases[i] || 'sprint';
+    if (tab === 'all') {
+      row.style.display = '';
+    } else {
+      row.style.display = (phase === tab) ? '' : 'none';
+    }
+  });
+};
+
+/* ═══════════════════════════════════════
+   FEATURE 5: SYNC MATRIX ROLE FILTER
+   ═══════════════════════════════════════ */
+window.filterSyncRole = function(role) {
+  var table = document.querySelector('.sync-table');
+  if (!table) return;
+  var rows = table.querySelectorAll('tbody tr');
+  
+  // Update active button
+  document.querySelectorAll('.sync-filter-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('data-role') === role);
+  });
+  
+  if (role === 'all') {
+    rows.forEach(function(row) {
+      row.classList.remove('dimmed', 'highlighted');
+    });
+    return;
+  }
+  
+  var idx = parseInt(role);
+  rows.forEach(function(row, i) {
+    if (i === idx) {
+      row.classList.remove('dimmed');
+      row.classList.add('highlighted');
+    } else {
+      row.classList.add('dimmed');
+      row.classList.remove('highlighted');
+    }
+  });
+};
+
+/* ═══════════════════════════════════════
+   FEATURE 6: COLLAPSIBLE CONSIDERATIONS
+   ═══════════════════════════════════════ */
+(function() {
+  var considerCols = document.querySelectorAll('.consider-col');
+  
+  considerCols.forEach(function(col) {
+    var headings = col.querySelectorAll('h3');
+    var groups = [];
+    var current = null;
+    
+    Array.from(col.children).forEach(function(child) {
+      if (child.tagName === 'H3') {
+        if (current) groups.push(current);
+        current = { heading: child, content: [] };
+      } else if (current) {
+        current.content.push(child);
+      }
+    });
+    if (current) groups.push(current);
+    
+    // Clear the column and rebuild with accordions
+    col.innerHTML = '';
+    
+    groups.forEach(function(group, idx) {
+      var section = document.createElement('div');
+      section.className = 'accordion-section' + (idx === 0 ? ' open' : '');
+      
+      var header = document.createElement('div');
+      header.className = 'accordion-header';
+      header.innerHTML = '<h3>' + group.heading.textContent + '</h3><span class="acc-chevron">▸</span>';
+      
+      var body = document.createElement('div');
+      body.className = 'accordion-body';
+      var inner = document.createElement('div');
+      inner.className = 'accordion-body-inner';
+      group.content.forEach(function(el) {
+        inner.appendChild(el.cloneNode(true));
+      });
+      body.appendChild(inner);
+      
+      section.appendChild(header);
+      section.appendChild(body);
+      
+      header.addEventListener('click', function() {
+        section.classList.toggle('open');
+      });
+      
+      col.appendChild(section);
+    });
+  });
+})();

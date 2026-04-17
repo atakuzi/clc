@@ -52,6 +52,7 @@
         </div>
       </div>
       <div class="step-desc">Open to anyone in the command</div>
+      <div class="step-drawer" id="drawer-submit"><div class="step-drawer-inner"><h4>Submit</h4><ul><li>Open to anyone in the command</li><li>Submit an idea, problem, or need via HERMES portal</li><li>No formal requirements needed at this stage</li></ul><div class="drawer-owner">👤 Owner: Anyone in USAREUR-AF</div></div></div>
     </div>
     <div class="connector"></div>
     <div class="step p-scope">
@@ -62,6 +63,7 @@
         </div>
       </div>
       <div class="step-desc">Data connection &amp; history reviewed</div>
+      <div class="step-drawer" id="drawer-scope"><div class="step-drawer-inner"><h4>Scope &amp; Review</h4><ul><li>Data connection &amp; history reviewed</li><li>Feasibility assessment conducted</li><li>Similar existing solutions checked</li><li>Sprint-ready requirements drafted</li></ul><div class="drawer-owner">👤 Owner: Intake &amp; Integration Team</div></div></div>
     </div>
     <div class="connector"></div>
     <div class="step p-priority">
@@ -72,6 +74,7 @@
         </div>
       </div>
       <div class="step-desc">Steering board decision gate</div>
+      <div class="step-drawer" id="drawer-priority"><div class="step-drawer-inner"><h4>CG Prioritize</h4><ul><li>Steering board decision gate</li><li>Projects ranked by strategic value</li><li>Resources allocated per priority</li><li>GO/NO-GO decision documented</li></ul><div class="drawer-owner">👤 Owner: CG / DSD Lead</div></div></div>
     </div>
     <div class="connector"></div>
     <div class="step p-execute">
@@ -82,6 +85,7 @@
         </div>
       </div>
       <div class="step-desc">Product development (SAFe)</div>
+      <div class="step-drawer" id="drawer-execute"><div class="step-drawer-inner"><h4>Execute (SAFe)</h4><ul><li>Product development via SAFe sprints</li><li>Discovery &amp; Framing → 4 Dev Sprints → Demo</li><li>12-week (60 working day) cycles</li><li>3 cycles per fiscal year</li></ul><div class="drawer-owner">👤 Owner: ART / Dev Teams / PMs</div></div></div>
     </div>
     <div class="connector"></div>
     <div class="step p-scale not-yet">
@@ -92,9 +96,24 @@
         </div>
       </div>
       <div class="step-desc">Enterprise rollout &amp; maintenance</div>
+      <div class="step-drawer" id="drawer-scale"><div class="step-drawer-inner"><h4>Scale &amp; Sustain</h4><ul><li>Enterprise rollout &amp; maintenance</li><li>Training team develops materials</li><li>Sustainment team accepts capability</li><li><em>Not Yet Active — need people</em></li></ul><div class="drawer-owner">👤 Owner: Sustainment Team (TBD)</div></div></div>
       <div class="not-yet-badge">Not Yet Active</div>
     </div>
   </div>
+</div>
+
+<!-- Phase Progress Bar -->
+<div class="phase-progress" data-active-phase="3">
+  <div class="phase-progress-track"><div class="phase-progress-fill" style="width:60%;"></div></div>
+  <div class="phase-progress-dot completed" title="Submit: Active"></div>
+  <div class="phase-progress-spacer"></div>
+  <div class="phase-progress-dot completed" title="Scope: Active"></div>
+  <div class="phase-progress-spacer"></div>
+  <div class="phase-progress-dot completed" title="Prioritize: Active"></div>
+  <div class="phase-progress-spacer"></div>
+  <div class="phase-progress-dot active" title="Execute: Current Phase"></div>
+  <div class="phase-progress-spacer"></div>
+  <div class="phase-progress-dot future" title="Scale: Not Yet Active"></div>
 </div>
 
 <!-- ═══════ CAPABILITY LIFECYCLE — 5 Phases ═══════ -->
@@ -109,6 +128,7 @@
         </div>
       </div>
       <div class="step-desc">Hermes submission, idea intake, initial scoping, feasibility check</div>
+      <div class="step-drawer" id="drawer-intake"><div class="step-drawer-inner"><h4>Intake &amp; Scoping</h4><ul><li>HERMES submission received</li><li>Initial scoping &amp; feasibility check</li><li>Data connections reviewed</li><li>Problem statement refined</li></ul><div class="drawer-owner">👤 Owner: Intake &amp; Integration Team</div></div></div>
     </div>
     <div class="connector"></div>
     <div class="step s-concept partial">
@@ -120,6 +140,7 @@
       </div>
       <div class="step-desc">Problem definition, initial planning, resource approval</div>
       <div class="partial-badge">Not Fully Active</div>
+      <div class="step-drawer" id="drawer-concept"><div class="step-drawer-inner"><h4>Concept</h4><ul><li>Problem definition finalized</li><li>Initial planning &amp; resource approval</li><li>Technical approach selected</li><li>Sprint-ready requirements written</li></ul><div class="drawer-owner">👤 Owner: Intake &amp; Integration + CDO</div></div></div>
     </div>
     <div class="connector"></div>
     <div class="step s-dev">
@@ -130,6 +151,7 @@
         </div>
       </div>
       <div class="step-desc">Design &amp; build, process development, testing &amp; validation via ART</div>
+      <div class="step-drawer" id="drawer-dev"><div class="step-drawer-inner"><h4>Development (SAFe)</h4><ul><li>Design &amp; build via ART</li><li>Process development &amp; testing</li><li>Validation via sprint demos</li><li>12-week PI cycles, 4 dev sprints</li></ul><div class="drawer-owner">👤 Owner: ART / Solutions Division</div></div></div>
     </div>
     <div class="connector"></div>
     <div class="step s-execsust not-yet">
@@ -141,6 +163,7 @@
       </div>
       <div class="step-desc">Deploy capability, training &amp; operations, ongoing support</div>
       <div class="not-yet-badge">Not Yet Active</div>
+      <div class="step-drawer" id="drawer-execsust"><div class="step-drawer-inner"><h4>Execution &amp; Sustainment</h4><ul><li>Deploy capability to end users</li><li>Training &amp; operations handoff</li><li>Ongoing support &amp; monitoring</li><li><em>Not Yet Active</em></li></ul><div class="drawer-owner">👤 Owner: Sustainment Team (TBD)</div></div></div>
     </div>
     <div class="connector"></div>
     <div class="step s-eol not-yet">
@@ -152,6 +175,7 @@
       </div>
       <div class="step-desc">Evolve, capability upgrades, or retire &amp; decommission</div>
       <div class="not-yet-badge">Not Yet Active</div>
+      <div class="step-drawer" id="drawer-eol"><div class="step-drawer-inner"><h4>Evolution / EOL</h4><ul><li>Evolve capability with upgrades</li><li>Assess continued value</li><li>Retire &amp; decommission if needed</li><li><em>Not Yet Active</em></li></ul><div class="drawer-owner">👤 Owner: TBD</div></div></div>
     </div>
   </div>
   <!-- Iterative cycle arrow: dashed curved arrow from Exec/Sustain back to Concept -->
@@ -225,6 +249,19 @@
           <div class="inject-label">Notional inject (e.g., Hackathon &mdash; TIL)</div>
         </div>
       </div>
+      <div class="sprint-detail-panel" id="sprintDetailPanel">
+      <div class="sprint-detail-inner">
+        <h4 id="sprintDetailTitle">Select a sprint block above</h4>
+        <div class="sprint-detail-col" id="sprintMeetings">
+          <h5>📋 Meetings</h5>
+          <ul id="sprintMeetingsList"><li>Click a sprint to see details</li></ul>
+        </div>
+        <div class="sprint-detail-col" id="sprintDeliverables">
+          <h5>📦 Deliverables</h5>
+          <ul id="sprintDeliverablesList"><li>Click a sprint to see details</li></ul>
+        </div>
+      </div>
+    </div>
       <div class="midpoint-footer" style="text-align:right; padding-right:20%;">&#x25BC; ~D+35 Midpoint &mdash; Scrum of Scrums + Product Check-in</div>
     </div>
 
@@ -247,7 +284,7 @@
      ═══════════════════════════════════════════════════════ -->
 <div class="onepager">
   <div class="onepager-divider"></div>
-  <h2 class="onepager-title" id="orgChart">Team Organization &mdash; DSD Structure</h2>
+  <h2 class="onepager-title" id="orgChart">Team Organization &mdash; DSD Structure <button class="org-expand-all" onclick="toggleAllOrg()" id="orgExpandBtn">Expand All</button></h2>
 
   <!-- Wire diagram -->
   <div class="org-wire">
@@ -341,7 +378,14 @@
   <h3 style="font-size:16px; font-weight:800; color:#1a2a3a; letter-spacing:0; margin-bottom:4px;" id="meetingOverview">Meeting Overview &mdash; All Prescribed Ceremonies</h3>
   <p style="font-size:12px; color:#6a7a8a; margin-bottom:12px;">These are the ONLY authorized meetings. No other ceremonial or drive-by meetings. If you need something not on this list, it goes through ART.</p>
 
-  <table class="impl-table">
+  <div class="meeting-tabs" id="meetingTabs">
+    <button class="meeting-tab active" data-tab="all" onclick="showMeetingTab('all')">All</button>
+    <button class="meeting-tab" data-tab="psb" onclick="showMeetingTab('psb')">PSB Week</button>
+    <button class="meeting-tab" data-tab="sprint" onclick="showMeetingTab('sprint')">Sprint Ceremonies</button>
+    <button class="meeting-tab" data-tab="midpoint" onclick="showMeetingTab('midpoint')">Midpoint</button>
+    <button class="meeting-tab" data-tab="demo" onclick="showMeetingTab('demo')">Demo / Retro</button>
+  </div>
+  <table class="impl-table" id="meetingTable">
     <thead><tr><th>Meeting</th><th>When</th><th>Duration</th><th>Attendees</th><th>Purpose</th><th>Output</th></tr></thead>
     <tbody>
       <tr style="background:rgba(42,8,69,0.04);">
@@ -536,6 +580,17 @@
   <div class="sync-title" id="syncMatrix">Synchronization Matrix &mdash; D-Day Cycle (DRAFT)</div>
   <div class="sync-subtitle">Who does what across the 60-day (12-week) PI cycle. Week 1 = PSB activities, Weeks 2&ndash;3 = Discovery &amp; Framing, Weeks 4&ndash;11 = Dev Sprints (4x), Week 12 = Demo/Retro.</div>
 
+  <div class="sync-filter-bar" id="syncFilterBar">
+    <button class="sync-filter-btn active" data-role="all" onclick="filterSyncRole('all')">All Roles</button>
+    <button class="sync-filter-btn" data-role="0" onclick="filterSyncRole('0')">CG / Senior Leaders</button>
+    <button class="sync-filter-btn" data-role="1" onclick="filterSyncRole('1')">OIC / NCOIC</button>
+    <button class="sync-filter-btn" data-role="2" onclick="filterSyncRole('2')">ART (RTE)</button>
+    <button class="sync-filter-btn" data-role="3" onclick="filterSyncRole('3')">CDO</button>
+    <button class="sync-filter-btn" data-role="4" onclick="filterSyncRole('4')">Intake &amp; Integration</button>
+    <button class="sync-filter-btn" data-role="5" onclick="filterSyncRole('5')">Product Managers</button>
+    <button class="sync-filter-btn" data-role="6" onclick="filterSyncRole('6')">Scrum Masters</button>
+    <button class="sync-filter-btn" data-role="7" onclick="filterSyncRole('7')">Developers</button>
+  </div>
   <table class="sync-table">
     <thead>
       <tr>
