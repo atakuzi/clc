@@ -59,49 +59,118 @@ function buildAccordionHeader(titleText) {
   return header;
 }
 
-function drawOrgWires() {
-  var dsd = document.getElementById('dsdBox');
-  var conn = document.getElementById('dsdConnector');
-  var level = document.querySelector('.org-wire-level.has-hline');
-  var wire = document.querySelector('.org-wire');
-  if (!dsd || !conn || !level || !wire) return;
+function getAppData() {
+  return window.APP_DATA || { sprintBlocks: [], meetings: [], syncMatrix: [], syncFilterRoles: [] };
+}
 
-  var wireRect = wire.getBoundingClientRect();
-  var dsdRect = dsd.getBoundingClientRect();
-  var dsdCenterX = dsdRect.left + dsdRect.width / 2 - wireRect.left;
+function appendHtmlCell(row, cellData) {
+  var cell = document.createElement('td');
+  cell.innerHTML = cellData.html;
 
-  conn.style.alignSelf = 'flex-start';
-  conn.style.position = 'relative';
-  conn.style.left = dsdCenterX + 'px';
-  conn.style.transform = 'translateX(-50%)';
+  if (cellData.className) cell.className = cellData.className;
+  if (cellData.colspan) cell.colSpan = cellData.colspan;
+  if (cellData.style) cell.style.cssText = cellData.style;
 
-  var levelWidth = level.scrollWidth;
-  var desiredLeft = dsdCenterX - levelWidth / 2;
-  level.style.marginLeft = desiredLeft + 'px';
-  level.style.marginRight = 'auto';
+  row.appendChild(cell);
+}
 
-  requestAnimationFrame(function() {
-    var boxes = level.querySelectorAll('.org-wire-box');
-    if (boxes.length < 2) return;
+function renderSprintBlocks() {
+  var sprintBar = document.getElementById('sprintBar');
+  if (!sprintBar) return;
 
-    var first = boxes[0];
-    var last = boxes[boxes.length - 1];
-    var levelRect = level.getBoundingClientRect();
-    var firstRect = first.getBoundingClientRect();
-    var lastRect = last.getBoundingClientRect();
-    var firstCenter = firstRect.left + firstRect.width / 2 - levelRect.left;
-    var lastCenter = lastRect.left + lastRect.width / 2 - levelRect.left;
-    var old = level.querySelector('.org-hline-dynamic');
-    if (old) old.remove();
+  var data = getAppData().sprintBlocks || [];
+  var markerNodes = Array.from(sprintBar.children);
+  sprintBar.replaceChildren();
 
-    var hline = document.createElement('div');
-    hline.className = 'org-hline-dynamic';
-    hline.style.cssText = 'position:absolute;top:0;height:2px;background:#475569;z-index:0;';
-    hline.style.left = firstCenter + 'px';
-    hline.style.width = (lastCenter - firstCenter) + 'px';
-    level.appendChild(hline);
+  data.forEach(function(blockData) {
+    var block = document.createElement('button');
+    var subtitle = document.createElement('span');
+
+    block.type = 'button';
+    block.className = 'sprint-block ' + blockData.className;
+    block.style.flex = String(blockData.flex);
+    block.innerHTML = blockData.label;
+
+    subtitle.className = 'sp-sub';
+    subtitle.innerHTML = blockData.subtitle;
+    block.appendChild(subtitle);
+    sprintBar.appendChild(block);
+  });
+
+  markerNodes.forEach(function(node) {
+    sprintBar.appendChild(node);
   });
 }
+
+function renderMeetingRows() {
+  var body = document.getElementById('meetingTableBody');
+  if (!body) return;
+
+  body.replaceChildren();
+
+  (getAppData().meetings || []).forEach(function(rowData) {
+    var row = document.createElement('tr');
+    row.setAttribute('data-phase', rowData.phase);
+    if (rowData.style) row.style.cssText = rowData.style;
+
+    rowData.cells.forEach(function(cellHtml) {
+      appendHtmlCell(row, { html: cellHtml });
+    });
+
+    body.appendChild(row);
+  });
+}
+
+function renderSyncMatrixRows() {
+  var body = document.getElementById('syncTableBody');
+  if (!body) return;
+
+  body.replaceChildren();
+
+  (getAppData().syncMatrix || []).forEach(function(rowData) {
+    var row = document.createElement('tr');
+
+    if (rowData.role) row.setAttribute('data-role', rowData.role);
+
+    rowData.cells.forEach(function(cellData) {
+      appendHtmlCell(row, cellData);
+    });
+
+    body.appendChild(row);
+  });
+}
+
+function renderSyncFilterButtons() {
+  var filterBar = document.getElementById('syncFilterBar');
+  if (!filterBar) return;
+
+  filterBar.replaceChildren();
+
+  var allButton = document.createElement('button');
+  allButton.type = 'button';
+  allButton.className = 'sync-filter-btn active';
+  allButton.setAttribute('data-role', 'all');
+  allButton.textContent = 'All Roles';
+  filterBar.appendChild(allButton);
+
+  (getAppData().syncFilterRoles || []).forEach(function(filterData) {
+    var button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'sync-filter-btn';
+    button.setAttribute('data-role', filterData.role);
+    button.innerHTML = filterData.label;
+    filterBar.appendChild(button);
+  });
+}
+
+function renderAppData() {
+  renderSprintBlocks();
+  renderMeetingRows();
+  renderSyncFilterButtons();
+  renderSyncMatrixRows();
+}
+
+renderAppData();
 
 function drawIterativeArrow() {
   var svg = document.getElementById('iterativeArrowSvg');
@@ -258,7 +327,6 @@ function drawZoomLine() {
 }
 
 function redrawDynamicLayouts() {
-  drawOrgWires();
   drawIterativeArrow();
   drawMappingLines();
   drawZoomLine();
@@ -269,6 +337,7 @@ var scheduleLayoutRefresh = debounce(redrawDynamicLayouts, 60);
 /* Scroll-spy navigation */
 (function() {
   var navLinks = document.querySelectorAll('#navLinks a[data-section]');
+  var navJump = document.getElementById('navJump');
   var sections = [];
 
   navLinks.forEach(function(link) {
@@ -292,7 +361,18 @@ var scheduleLayoutRefresh = debounce(redrawDynamicLayouts, 60);
       link.classList.remove('active');
     });
 
-    if (current) current.link.classList.add('active');
+    if (current) {
+      current.link.classList.add('active');
+      if (navJump) navJump.value = current.link.getAttribute('data-section');
+    }
+  }
+
+  if (navJump) {
+    navJump.addEventListener('change', function() {
+      var target = document.getElementById(navJump.value);
+      if (!target) return;
+      target.scrollIntoView({ behavior: getScrollBehavior(), block: 'start' });
+    });
   }
 
   window.addEventListener('scroll', debounce(updateActiveNav, 50));
@@ -336,7 +416,6 @@ var scheduleLayoutRefresh = debounce(redrawDynamicLayouts, 60);
   });
 })();
 
-window.addEventListener('load', drawOrgWires);
 window.addEventListener('load', drawIterativeArrow);
 window.addEventListener('load', drawMappingLines);
 window.addEventListener('load', function() {
@@ -426,39 +505,7 @@ window.addEventListener('resize', debounce(redrawDynamicLayouts, 150));
 
 /* Sprint stepper */
 (function() {
-  var sprintData = [
-    {
-      name: 'Discovery & Framing (Weeks 2-3)',
-      meetings: ['Daily Standup (<=15 min)', 'Sprint kickoff planning'],
-      deliverables: ['Technical discovery completed', 'Work estimates finalized', 'Prototypes if needed', 'Sprint-ready backlog']
-    },
-    {
-      name: 'Dev Sprint 1 (Weeks 4-5)',
-      meetings: ['Daily Standup (<=15 min)', 'AAR w/ DSD & Stakeholders', 'ART back-brief to boss'],
-      deliverables: ['Sprint 1 increment', 'Updated milestone chart', 'Sprint boundary AAR']
-    },
-    {
-      name: 'Dev Sprint 2 (Weeks 6-7)',
-      meetings: ['Daily Standup (<=15 min)', 'Scrum of Scrums (~D+35)', 'Product Midpoint Check-in', 'AAR w/ DSD & Stakeholders'],
-      deliverables: ['Sprint 2 increment', 'Midpoint assessment', 'Process adjustments documented']
-    },
-    {
-      name: 'Dev Sprint 3 (Weeks 8-9)',
-      meetings: ['Daily Standup (<=15 min)', 'AAR w/ DSD & Stakeholders'],
-      deliverables: ['Sprint 3 increment', 'Integration testing', 'Updated milestone chart']
-    },
-    {
-      name: 'Dev Sprint 4 (Weeks 10-11)',
-      meetings: ['Daily Standup (<=15 min)', 'AAR w/ DSD & Stakeholders'],
-      deliverables: ['Feature completion', 'Dev freeze before demo', 'Bug fixes only', 'Demo materials prepped']
-    },
-    {
-      name: 'Demo / Retro (Week 12)',
-      meetings: ['Product Demo (PMs lead)', 'Cycle Retro / AAR (all leads + DSD Director)'],
-      deliverables: ['Working capability demonstrated', 'Feedback categorized: fix now / next cycle / backlog', 'Invest/divest/pivot decisions', 'Lessons learned documented']
-    }
-  ];
-
+  var sprintData = getAppData().sprintBlocks || [];
   var blocks = document.querySelectorAll('.sprint-bar .sprint-block');
   var panel = document.getElementById('sprintDetailPanel');
   if (!panel || blocks.length === 0) return;

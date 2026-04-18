@@ -4,17 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Capability Lifecycle &mdash; ODT Development Process</title>
-<link rel="stylesheet" href="styles.css">
-<link rel="icon" type="image/jpeg" href="assets/HERMES_LOGO.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="styles/base.css">
+<link rel="stylesheet" href="styles/index-page.css">
+<link rel="icon" type="image/jpeg" href="assets/images/HERMES_LOGO.jpg">
 <meta name="description" content="USAREUR-AF ODT Capability Lifecycle development process, SAFe framework implementation, and team organization guide.">
 </head>
 <body>
 
-<!-- ═══════ STICKY NAVIGATION ═══════ -->
+
 <nav class="site-nav" id="siteNav">
   <div class="site-nav-inner">
     <a class="nav-brand" href="#" id="navBrand">
-      <img src="assets/HERMES_LOGO.jpg" alt="HERMES">
+      <img src="assets/images/HERMES_LOGO.jpg" alt="HERMES">
       <div>
         <div class="nav-brand-text">Capability Lifecycle</div>
         <div class="nav-brand-sub">USAREUR-AF ODT</div>
@@ -32,15 +36,30 @@
       <a href="#capLifecycle" data-section="capLifecycle">Cap Lifecycle</a>
       <a href="#implGuide" data-section="implGuide">Impl Guide</a>
     </div>
-    <a class="nav-download" href="assets/DSD_Alternate_Visualization.pptx" download title="Download Alternate Visualization PowerPoint">&#x1F4CA; Alt Visual</a>
+    <label class="nav-jump" for="navJump">
+      <span class="sr-only">Jump to section</span>
+      <select id="navJump">
+        <option value="hermesPipeline">Pipeline</option>
+        <option value="sdlcPipeline">Lifecycle</option>
+        <option value="psbCycle">Sprint Cycle</option>
+        <option value="orgChart">Org Chart</option>
+        <option value="meetingOverview">Meetings</option>
+        <option value="considerations">Considerations</option>
+        <option value="syncMatrix">Sync Matrix</option>
+        <option value="safeBackground">SAFe</option>
+        <option value="capLifecycle">Cap Lifecycle</option>
+        <option value="implGuide">Impl Guide</option>
+      </select>
+    </label>
+    <a class="nav-download" href="assets/downloads/DSD_Alternate_Visualization.pptx" download title="Download Alternate Visualization PowerPoint">&#x1F4CA; Alt Visual</a>
   </div>
 </nav>
 
-<!-- Unit crest removed — branding now in sticky nav -->
+
 
 <div class="main-content">
 
-<!-- ═══════ HERMES — 5 Bubbles ═══════ -->
+
 <div class="row">
   <div class="section-label hermes">HERMES &mdash; Project Pipeline</div>
   <div class="pipeline" id="hermesPipeline">
@@ -74,7 +93,7 @@
       <button class="step-trigger" type="button">
         <div class="circle-wrap">
           <div class="circle">
-            <div class="icon" style="font-size:22px; letter-spacing:2px;">&#x2605;&#x2605;&#x2605;&#x2605;</div>
+            <div class="icon icon-priority">&#x2605;&#x2605;&#x2605;&#x2605;</div>
             <div class="label">CG Prioritize</div>
           </div>
         </div>
@@ -112,9 +131,9 @@
   </div>
 </div>
 
-<!-- Phase Progress Bar -->
+
 <div class="phase-progress" data-active-phase="3">
-  <div class="phase-progress-track"><div class="phase-progress-fill" style="width:60%;"></div></div>
+  <div class="phase-progress-track"><div class="phase-progress-fill phase-progress-fill-60"></div></div>
   <div class="phase-progress-dot completed" title="Submit: Active"></div>
   <div class="phase-progress-spacer"></div>
   <div class="phase-progress-dot completed" title="Scope: Active"></div>
@@ -126,9 +145,9 @@
   <div class="phase-progress-dot future" title="Scale: Not Yet Active"></div>
 </div>
 
-<!-- ═══════ CAPABILITY LIFECYCLE — 5 Phases ═══════ -->
+
 <div class="row">
-  <a href="capability_lifecycle_process.html" style="text-decoration:none;"><div class="section-label sdlc" style="cursor:pointer;">Capability Lifecycle &mdash; Process Phases &#x25B6;</div></a>
+  <a class="section-link" href="capability_lifecycle_process.html"><div class="section-label sdlc section-label-link">Capability Lifecycle &mdash; Process Phases &#x25B6;</div></a>
   <div class="pipeline" id="sdlcPipeline">
     <div class="step s-intake">
       <button class="step-trigger" type="button">
@@ -161,7 +180,7 @@
       <button class="step-trigger" type="button">
         <div class="circle-wrap">
           <div class="circle">
-            <div class="icon" style="filter:brightness(2);">&#x1F3D7;&#xFE0F;</div>
+            <div class="icon icon-dev">&#x1F3D7;&#xFE0F;</div>
             <div class="label">Development (SAFe)</div>
           </div>
         </div>
@@ -198,7 +217,7 @@
       <div class="step-drawer" id="drawer-eol"><div class="step-drawer-inner"><h4>Evolution / EOL</h4><ul><li>Evolve capability with upgrades</li><li>Assess continued value</li><li>Retire &amp; decommission if needed</li><li><em>Not Yet Active</em></li></ul><div class="drawer-owner">&#128100; Owner: TBD</div></div></div>
     </div>
   </div>
-  <!-- Iterative cycle arrow: dashed curved arrow from Exec/Sustain back to Concept -->
+  
   <svg class="iterative-arrow-svg" id="iterativeArrowSvg">
     <defs>
       <marker id="arrow-iter" viewBox="0 0 10 7" refX="1" refY="3.5"
@@ -210,19 +229,19 @@
 
 </div>
 
-<!-- ═══════ PSB / D-DAY CYCLE ═══════ -->
-<div class="psb-section" style="margin-top:24px;">
+
+<div class="psb-section psb-section-offset">
   <div class="row">
     <div class="section-label psb-label" id="psbCycle">PSB Cycle &mdash; Inside Execution / Development</div>
   </div>
 
-  <!-- D-Day Timeline — full width, sprints inline -->
+  
   <div class="d-timeline-full">
-    <!-- Pre-sprint nodes -->
+    
     <div class="d-left-nodes">
       <div class="d-node">
         <div class="d-day-label">D-1</div>
-        <div class="d-desc"><strong>DSD Lead &mdash; Planning Day</strong><br>Priority &amp; resource recs<br><em style="font-size:10px;color:#2A0845;">Incl. PSB RXL</em></div>
+        <div class="d-desc"><strong>DSD Lead &mdash; Planning Day</strong><br>Priority &amp; resource recs<br><em class="planning-note-emphasis">Incl. PSB RXL</em></div>
       </div>
       <div class="d-node psb-node">
         <div class="d-day-label">D-Day</div>
@@ -242,28 +261,22 @@
       </div>
     </div>
 
-    <!-- Sprints block -->
+    
     <div class="d-sprint-zone">
-      <div class="d-day-label" style="text-align:center; margin-bottom:2px; margin-top:-4px;">D+5 &rarr; D+60</div>
-      <div class="sprint-bar">
-        <button class="sprint-block sb1" type="button" style="flex:2;">Discovery &amp; Framing<span class="sp-sub">Weeks 2&ndash;3</span></button>
-        <button class="sprint-block sb-dev" type="button" style="flex:2;">Dev Sprint 1<span class="sp-sub">Weeks 4&ndash;5</span></button>
-        <button class="sprint-block sb-dev" type="button" style="flex:2;">Dev Sprint 2<span class="sp-sub">Weeks 6&ndash;7</span></button>
-        <button class="sprint-block sb-dev" type="button" style="flex:2;">Dev Sprint 3<span class="sp-sub">Weeks 8&ndash;9</span></button>
-        <button class="sprint-block sb-dev" type="button" style="flex:2;">Dev Sprint 4<span class="sp-sub">Weeks 10&ndash;11</span></button>
-        <button class="sprint-block sb4" type="button" style="flex:1;">Demo/Retro<span class="sp-sub">Week 12</span></button>
-        <!-- Midpoint triangle — between Dev Sprint 2 and Dev Sprint 3 -->
-        <div class="midpoint-diamond" style="left:54.5%;">
-          <div style="width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-top:28px solid #2A0845;margin:0 auto;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.3));"></div>
+      <div class="d-day-label sprint-window-label">D+5 &rarr; D+60</div>
+      <div class="sprint-bar" id="sprintBar">
+        
+        <div class="midpoint-diamond midpoint-diamond-54">
+          <div class="midpoint-triangle"></div>
           <div class="md-label">Midpoint</div>
         </div>
-        <!-- AAR markers at sprint boundaries -->
-        <div class="aar-marker" style="left:0%;"><div class="aar-dot"></div><div class="aar-label">AAR</div></div>
-        <div class="aar-marker" style="left:18.2%;"><div class="aar-dot"></div><div class="aar-label">AAR</div></div>
-        <div class="aar-marker" style="left:36.4%;"><div class="aar-dot"></div><div class="aar-label">AAR</div></div>
-        <div class="aar-marker" style="left:54.5%;"><div class="aar-dot"></div><div class="aar-label">AAR</div></div>
-        <div class="aar-marker" style="left:72.7%;"><div class="aar-dot"></div><div class="aar-label">AAR</div></div>
-        <!-- Hackathon inject annotation -->
+        
+        <div class="aar-marker aar-left-0"><div class="aar-dot"></div><div class="aar-label">AAR</div></div>
+        <div class="aar-marker aar-left-18"><div class="aar-dot"></div><div class="aar-label">AAR</div></div>
+        <div class="aar-marker aar-left-36"><div class="aar-dot"></div><div class="aar-label">AAR</div></div>
+        <div class="aar-marker aar-left-54"><div class="aar-dot"></div><div class="aar-label">AAR</div></div>
+        <div class="aar-marker aar-left-72"><div class="aar-dot"></div><div class="aar-label">AAR</div></div>
+        
         <div class="hackathon-inject">
           <div class="inject-arrow">&#x2191;</div>
           <div class="inject-label">Notional inject (e.g., Hackathon &mdash; TIL)</div>
@@ -282,10 +295,10 @@
         </div>
       </div>
     </div>
-      <div class="midpoint-footer" style="text-align:right; padding-right:20%;">&#x25BC; ~D+35 Midpoint &mdash; Scrum of Scrums + Product Check-in</div>
+      <div class="midpoint-footer midpoint-footer-right">&#x25BC; ~D+35 Midpoint &mdash; Scrum of Scrums + Product Check-in</div>
     </div>
 
-    <!-- Post-sprint node -->
+    
     <div class="d-right-nodes">
       <div class="d-node">
         <div class="d-day-label">D+60</div>
@@ -293,42 +306,40 @@
       </div>
     </div>
   </div>
-  <div class="cycles-note" id="planningNotes" style="margin-top:2px;">Planning assumption: 3 cycles per FY</div>
-  <div class="working-days-note" style="margin-top:1px;"><strong>All days are WORKING DAYS</strong> &mdash; flexible around admin events, holidays, exercises (decided at D-1 Planning Day)</div>
+  <div class="cycles-note planning-notes" id="planningNotes">Planning assumption: 3 cycles per FY</div>
+  <div class="working-days-note working-days-offset"><strong>All days are WORKING DAYS</strong> &mdash; flexible around admin events, holidays, exercises (decided at D-1 Planning Day)</div>
 </div>
 
-</div><!-- /main-content -->
+</div>
 
-<!-- ═══════════════════════════════════════════════════════
-     ONE-PAGER: Team Organization & TIL
-     ═══════════════════════════════════════════════════════ -->
+
 <div class="onepager">
   <div class="onepager-divider"></div>
   <h2 class="onepager-title" id="orgChart">Team Organization &mdash; DSD Structure <button class="org-expand-all" type="button" id="orgExpandBtn">Expand All</button></h2>
 
-  <!-- Wire diagram -->
+  
   <div class="org-wire">
-    <!-- Top level: DSD with CTO tangential to the right -->
-    <div style="display:flex; align-items:center; justify-content:center; gap:0; position:relative;">
+    
+    <div class="org-top-row">
       <div id="dsdBox" class="org-wire-box top-level">
         <div class="owb-title">DSD</div>
         <div class="owb-sub">Directorate / Senior Data</div>
       </div>
-      <div style="width:60px; border-top:2px dashed #6a7a8a; margin:0 8px; flex-shrink:0;"></div>
-      <div class="org-wire-box" style="border:2px solid #6a7a8a; min-width:110px;">
-        <div class="owb-title" style="color:#6a7a8a;">CTO</div>
+      <div class="org-cto-link"></div>
+      <div class="org-wire-box org-cto-box">
+        <div class="owb-title org-cto-title">CTO</div>
       </div>
     </div>
-    <!-- Vertical connector from DSD down — positioned by JS -->
+    
     <div id="dsdConnector" class="org-wire-connector"></div>
 
-    <!-- Division level: 3 divisions -->
-    <div class="org-wire-level has-hline" style="gap:32px; position:relative;">
-      <!-- Data -->
-      <div style="display:flex;flex-direction:column;align-items:center;">
+    
+    <div class="org-wire-level has-hline org-wire-level-spaced">
+      
+      <div class="org-column">
         <div class="org-wire-vdrop"></div>
-        <div class="org-wire-box" style="border-color:#377EB8;">
-          <div class="owb-title" style="color:#377EB8;">Data</div>
+        <div class="org-wire-box org-box-data">
+          <div class="owb-title org-title-data">Data</div>
           <div class="owb-sub">Division &mdash; CDO leads</div>
           <ul class="owb-items">
             <li><strong>Data Governance Branch</strong> &mdash; data stewards have governance role per directorate, linked via this branch</li>
@@ -338,11 +349,11 @@
           </ul>
         </div>
       </div>
-      <!-- Solutions (ART) -->
-      <div style="display:flex;flex-direction:column;align-items:center;">
+      
+      <div class="org-column">
         <div class="org-wire-vdrop"></div>
-        <div class="org-wire-box" style="border-color:#d4820a;">
-          <div class="owb-title" style="color:#d4820a;">Solutions</div>
+        <div class="org-wire-box org-box-solutions">
+          <div class="owb-title org-title-solutions">Solutions</div>
           <div class="owb-sub">Division &mdash; ART leads</div>
           <ul class="owb-items">
             <li><strong>3&ndash;5 Dev Team Branches</strong> (~5 per team)</li>
@@ -351,25 +362,25 @@
           </ul>
         </div>
       </div>
-      <!-- Intake &amp; Integration (formerly Scoping) -->
-      <div style="display:flex;flex-direction:column;align-items:center;">
+      
+      <div class="org-column">
         <div class="org-wire-vdrop"></div>
-        <div class="org-wire-box" style="border-color:#2a7a2a;">
-          <div class="owb-title" style="color:#2a7a2a;">Intake &amp; Integration</div>
+        <div class="org-wire-box org-box-intake">
+          <div class="owb-title org-title-intake">Intake &amp; Integration</div>
           <div class="owb-sub">Division Chief leads</div>
           <ul class="owb-items">
             <li><strong>Discovery &amp; Framing</strong> &mdash; requirements &amp; feasibility</li>
             <li><strong>Handoff / Scaling</strong></li>
-            <li><strong>KM</strong> &mdash; Knowledge Management <span style="font-size:10px;color:#888;font-style:italic;">(future O1A billet)</span></li>
+            <li><strong>KM</strong> &mdash; Knowledge Management <span class="org-future-note">(future O1A billet)</span></li>
           </ul>
-          <div style="font-size:10px; color:#2a7a2a; margin-top:6px; font-weight:600; border-top:1px solid #ddd; padding-top:4px;">Responsible for coordinating with adjacent &amp; higher; has direct liaison authority.</div>
+          <div class="org-box-note">Responsible for coordinating with adjacent &amp; higher; has direct liaison authority.</div>
         </div>
       </div>
-      <!-- TIL (inline, dashed border) -->
-      <div style="display:flex;flex-direction:column;align-items:center;">
-        <div class="org-wire-vdrop" style="border-left:2px dashed #2ecc71;background:none;"></div>
-        <div class="org-wire-box" style="border: 2px dashed #2ecc71; background:#f0fdf4;">
-          <div class="owb-title" style="color:#2ecc71;">TIL</div>
+      
+      <div class="org-column">
+        <div class="org-wire-vdrop org-wire-vdrop-til"></div>
+        <div class="org-wire-box org-box-til">
+          <div class="owb-title org-title-til">TIL</div>
           <div class="owb-sub">Theater Innovation Lab (Templated)</div>
           <ul class="owb-items">
             <li><strong>Innovation Team</strong> &mdash; not locked into existing solutions</li>
@@ -377,12 +388,12 @@
             <li><strong>Legal</strong><span class="direct-support">*</span></li>
             <li>Runs hackathons; gathers innovation from across theater &amp; beyond</li>
           </ul>
-          <div style="font-size:9px; color:#c0392b; margin-top:4px; font-style:italic;"><span class="direct-support">*</span> Direct support</div>
+          <div class="org-direct-support-note"><span class="direct-support">*</span> Direct support</div>
         </div>
       </div>
     </div>
 
-    <!-- TACON / ADCON note -->
+    
     <div class="org-tacon-note">TACON vs ADCON &mdash; Rating chain (ADCON) is separate from task organization (TACON). Your rater is NOT necessarily your team lead in the D-Day cycle.</div>
   </div>
 
@@ -390,13 +401,11 @@
 
 </div>
 
-<!-- ═══════════════════════════════════════════════════════
-     MEETING OVERVIEW — underneath org chart
-     ═══════════════════════════════════════════════════════ -->
+
 <div class="onepager">
   <div class="onepager-divider"></div>
-  <h3 style="font-size:16px; font-weight:800; color:#1a2a3a; letter-spacing:0; margin-bottom:4px;" id="meetingOverview">Meeting Overview &mdash; All Prescribed Ceremonies</h3>
-  <p style="font-size:12px; color:#6a7a8a; margin-bottom:12px;">These are the ONLY authorized meetings. No other ceremonial or drive-by meetings. If you need something not on this list, it goes through ART.</p>
+  <h3 class="meeting-overview-title" id="meetingOverview">Meeting Overview &mdash; All Prescribed Ceremonies</h3>
+  <p class="meeting-overview-copy">These are the ONLY authorized meetings. No other ceremonial or drive-by meetings. If you need something not on this list, it goes through ART.</p>
 
   <div class="meeting-tabs" id="meetingTabs">
     <button class="meeting-tab active" type="button" data-tab="all">All</button>
@@ -407,117 +416,12 @@
   </div>
   <table class="impl-table" id="meetingTable">
     <thead><tr><th>Meeting</th><th>When</th><th>Duration</th><th>Attendees</th><th>Purpose</th><th>Output</th></tr></thead>
-    <tbody>
-      <tr data-phase="psb" style="background:rgba(42,8,69,0.04);">
-        <td>DSD Lead Planning Day</td>
-        <td>D-1</td>
-        <td>Half day</td>
-        <td>DSD Lead, Intake &amp; Integration Team, Team Leads, ART</td>
-        <td>Intake &amp; Integration team presents scoped problems. Team leads recommend priority, then resource allocation. PSB RXL (rehearsal).</td>
-        <td>PSB briefing package ready; draft order; no surprises at PSB</td>
-      </tr>
-      <tr data-phase="psb" style="background:rgba(42,8,69,0.04);">
-        <td>PSB with CG</td>
-        <td>D-Day</td>
-        <td>As scheduled</td>
-        <td>CG (chairs), DSD, Division Chiefs, ART, CDO, PMs</td>
-        <td>CG approves/defers/divests each project. Priorities ranked. Resources allocated.</td>
-        <td>GO/NO-GO per project; decisions documented same day</td>
-      </tr>
-      <tr data-phase="psb" style="background:rgba(42,8,69,0.04);">
-        <td>ART Sync</td>
-        <td>D+1</td>
-        <td>1&ndash;2 hrs</td>
-        <td>ART, Scrum Masters, team leads</td>
-        <td>Assign teams to projects, identify cross-team dependencies, start work breakdown</td>
-        <td>Teams assigned; dependency map</td>
-      </tr>
-      <tr data-phase="psb" style="background:rgba(42,8,69,0.04);">
-        <td>PI Kickoff</td>
-        <td>D+2</td>
-        <td>1&ndash;2 hrs</td>
-        <td>All team members</td>
-        <td>Brief PSB summary, set cycle objectives, Sprint 1 scope understood</td>
-        <td>Everyone aligned on what we&rsquo;re building this cycle</td>
-      </tr>
-      <tr data-phase="psb" style="background:rgba(42,8,69,0.04);">
-        <td>BHO &mdash; Intake &amp; Integration to Team</td>
-        <td>D+3</td>
-        <td>1&ndash;2 hrs</td>
-        <td>ART, PMs, Stakeholders</td>
-        <td>Build stakeholder map per project: consumer, success criteria, approver</td>
-        <td>Stakeholder map per project complete</td>
-      </tr>
-      <tr data-phase="sprint">
-        <td>Daily Standup</td>
-        <td>Every work day (Wk 2&ndash;12)</td>
-        <td>&le;15 min</td>
-        <td>Sprint team (devs, SM, PM)</td>
-        <td>What did you do, what will you do, any blockers</td>
-        <td>Blockers escalated same day</td>
-      </tr>
-      <tr data-phase="midpoint" style="background:rgba(212,130,10,0.04);">
-        <td>Scrum of Scrums</td>
-        <td>~D+35 (midpoint)</td>
-        <td>1 hr</td>
-        <td>All Scrum Masters + ART</td>
-        <td><strong>Process only</strong> &mdash; not project content. Is what we are doing working?</td>
-        <td>Process changes agreed for remaining sprints</td>
-      </tr>
-      <tr data-phase="midpoint" style="background:rgba(212,130,10,0.04);">
-        <td>Product Midpoint Check-in</td>
-        <td>~D+35 (same day)</td>
-        <td>1 hr</td>
-        <td>PMs + Stakeholders</td>
-        <td><strong>Project-specific.</strong> What&rsquo;s on track, what&rsquo;s at risk, what needs to pivot.</td>
-        <td>Decisions documented; priorities adjusted if needed</td>
-      </tr>
-      <tr data-phase="sprint">
-        <td>Sprint Boundary AAR</td>
-        <td>End of each sprint</td>
-        <td>30&ndash;45 min</td>
-        <td>Sprint team</td>
-        <td>Internal team retro &mdash; what worked, what didn&rsquo;t</td>
-        <td>Milestone chart updated; demo materials prepped</td>
-      </tr>
-      <tr data-phase="sprint" style="background:rgba(212,130,10,0.04);">
-        <td>AAR w/ DSD &amp; Stakeholders</td>
-        <td>O/A first day of each sprint</td>
-        <td>30&ndash;45 min</td>
-        <td>ART, DSD, Stakeholders</td>
-        <td>ART provides project updates to DSD and stakeholders. Status, risks, decisions.</td>
-        <td>Leadership informed; blockers escalated</td>
-      </tr>
-      <tr data-phase="sprint" style="background:rgba(212,130,10,0.04);">
-        <td>ART Back-Brief</td>
-        <td>Start of dev sprints</td>
-        <td>30 min</td>
-        <td>ART Leadership, boss</td>
-        <td>Back-brief: the plan, dependencies, projected progress</td>
-        <td>Boss aligned on expectations and constraints</td>
-      </tr>
-      <tr data-phase="demo" style="background:rgba(196,26,28,0.04);">
-        <td>Product Demo</td>
-        <td>Week 12</td>
-        <td>As needed</td>
-        <td>PMs (lead), devs (support), stakeholders, CG/SLs</td>
-        <td>Demo working capability &mdash; not slides. Named consumer validates.</td>
-        <td>Feedback collected same day; categorized: fix now / next cycle / backlog / won&rsquo;t do</td>
-      </tr>
-      <tr data-phase="demo" style="background:rgba(196,26,28,0.04);">
-        <td>Cycle Retro / AAR</td>
-        <td>Week 12 (after demo)</td>
-        <td>1&ndash;2 hrs</td>
-        <td>OIC/NCOIC (lead), ART, all team leads, <strong>DSD Director</strong></td>
-        <td>Full cycle retro. Cross-team patterns. Process changes for next cycle. <strong>Decision point: invest, divest, or pivot</strong> on each capability.</td>
-        <td>Actionable items with owners and deadlines; invest/divest/pivot decisions documented</td>
-      </tr>
-    </tbody>
+    <tbody id="meetingTableBody"></tbody>
   </table>
   <div class="impl-note">Total prescribed meetings per 60-day cycle: 5 one-time (PSB week) + daily standups + AAR w/ DSD at sprint starts + 2 midpoint + sprint boundary retros + ART back-brief + demo + Retro. That&rsquo;s it. Everything else is work time.</div>
 </div>
 
-<!-- ═══════ CONSIDERATIONS (scroll down) ═══════ -->
+
 <div class="considerations">
   <div class="consider-divider" id="considerations"></div>
   <div class="consider-grid">
@@ -594,27 +498,17 @@
   </div>
 </div>
 
-<!-- ═══════ SYNC MATRIX ═══════ -->
+
 <div class="sync-section">
   <div class="sync-divider"></div>
   <div class="sync-title" id="syncMatrix">Synchronization Matrix &mdash; D-Day Cycle (DRAFT)</div>
   <div class="sync-subtitle">Who does what across the 60-day (12-week) PI cycle. Week 1 = PSB activities, Weeks 2&ndash;3 = Discovery &amp; Framing, Weeks 4&ndash;11 = Dev Sprints (4x), Week 12 = Demo/Retro.</div>
 
-  <div class="sync-filter-bar" id="syncFilterBar">
-    <button class="sync-filter-btn active" type="button" data-role="all">All Roles</button>
-    <button class="sync-filter-btn" type="button" data-role="cg">CG / Senior Leaders</button>
-    <button class="sync-filter-btn" type="button" data-role="oic">OIC / NCOIC</button>
-    <button class="sync-filter-btn" type="button" data-role="art">ART (RTE)</button>
-    <button class="sync-filter-btn" type="button" data-role="cdo">CDO</button>
-    <button class="sync-filter-btn" type="button" data-role="intake">Intake &amp; Integration</button>
-    <button class="sync-filter-btn" type="button" data-role="pm">Product Managers</button>
-    <button class="sync-filter-btn" type="button" data-role="sm">Scrum Masters</button>
-    <button class="sync-filter-btn" type="button" data-role="dev">Developers</button>
-  </div>
+  <div class="sync-filter-bar" id="syncFilterBar"></div>
   <table class="sync-table">
     <thead>
       <tr data-role="cg">
-        <th style="background:#f8f9fa;color:#1a2a3a;">Role</th>
+        <th class="sync-role-head">Role</th>
         <th class="phase-header ph-psb">PSB Week<br>(D-1 &rarr; D+3)</th>
         <th class="phase-header ph-scope">Discovery &amp; Framing<br>(Wk 2&ndash;3)</th>
         <th class="phase-header ph-dev">Dev Sprint 1<br>(Wk 4&ndash;5)</th>
@@ -624,127 +518,19 @@
         <th class="phase-header ph-demo">Demo/Retro<br>(Wk 12)</th>
       </tr>
     </thead>
-    <tbody>
-      <tr data-role="oic">
-        <td class="col-role">CG / Senior Leaders</td>
-        <td><ul><li>Chair PSB (D-Day)</li><li>Set priorities</li><li>Approve/defer/divest</li></ul></td>
-        <td class="draft-note">No direct involvement</td>
-        <td class="draft-note">No direct involvement</td>
-        <td class="draft-note">No direct involvement</td>
-        <td class="draft-note">No direct involvement</td>
-        <td class="draft-note">No direct involvement</td>
-        <td><ul><li>Attend demo</li><li>Provide feedback</li><li>Approve next cycle priorities</li></ul></td>
-      </tr>
-      <tr data-role="art">
-        <td class="col-role">OIC / NCOIC</td>
-        <td><ul><li>Attend Planning Day (D-1)</li><li>Brief at PSB</li><li>ART Sync (D+1)</li><li>PI Kickoff (D+2)</li></ul></td>
-        <td><ul><li>Validate scope decisions</li><li>Resource allocation</li></ul></td>
-        <td><ul><li>Remove blockers</li><li>Monitor progress</li></ul></td>
-        <td><ul><li>Midpoint check-in (~D+35)</li><li>Remove blockers</li></ul></td>
-        <td><ul><li>Remove blockers</li><li>Monitor progress</li></ul></td>
-        <td><ul><li>Remove blockers</li><li>Monitor progress</li></ul></td>
-        <td><ul><li>Review demo materials</li><li>Lead internal AAR</li><li>Prep next cycle PSB brief</li></ul></td>
-      </tr>
-      <tr data-role="cdo">
-        <td class="col-role">ART (RTE)</td>
-        <td><ul><li>Support Planning Day (D-1)</li><li>Attend PSB</li><li>Lead ART Sync (D+1)</li><li>Lead PI Kickoff (D+2)</li><li>BHO &mdash; Intake &amp; Integration to Team (D+3)</li></ul></td>
-        <td><ul><li>Assign teams &amp; work</li><li>Coordinate cross-team deps</li></ul></td>
-        <td><ul><li>Facilitate sprint ceremonies</li><li>Shield devs from interruptions</li><li>AAR w/ DSD &amp; Stakeholders</li><li>Back-brief boss on plan &amp; dependencies</li></ul></td>
-        <td><ul><li>Scrum of Scrums (~D+35)</li><li>Product Midpoint Check-in</li><li>Process adjustments</li><li>AAR w/ DSD &amp; Stakeholders</li></ul></td>
-        <td><ul><li>Facilitate sprint ceremonies</li><li>Handle random drop-ins</li><li>AAR w/ DSD &amp; Stakeholders</li></ul></td>
-        <td><ul><li>Facilitate sprint ceremonies</li><li>Handle random drop-ins</li><li>AAR w/ DSD &amp; Stakeholders</li></ul></td>
-        <td><ul><li>Coordinate demo logistics</li><li>Facilitate Retro</li><li>Aggregate lessons learned</li></ul></td>
-      </tr>
-      <tr data-role="intake">
-        <td class="col-role">CDO</td>
-        <td><ul><li>Attend PSB</li><li>Align data strategy</li></ul></td>
-        <td><ul><li>Validate data requirements</li><li>Governance guidance</li></ul></td>
-        <td colspan="4" style="text-align:center;"><ul><li>Available for governance decisions</li><li>Stakeholder engagement as needed</li></ul></td>
-        <td><ul><li>Attend demo</li><li>Strategic feedback</li></ul></td>
-      </tr>
-      <tr data-role="pm">
-        <td class="col-role">Intake &amp; Integration Team<br><span style="font-weight:400;font-size:10px;">(Deputy + 2&ndash;3)</span></td>
-        <td><ul><li>Present scoped problems (D-1)</li><li>PSB RXL (rehearsal)</li><li>BHO &mdash; Team handoff (D+3)</li></ul></td>
-        <td style="background:rgba(55,126,184,0.06);"><ul><li><strong>PRIMARY EFFORT</strong></li><li>Scope incoming projects</li><li>Data connection &amp; history review</li><li>Feasibility assessment</li><li>Write sprint-ready requirements</li></ul></td>
-        <td><ul><li>Clarify requirements for devs</li><li>Begin scoping next cycle</li></ul></td>
-        <td><ul><li>Continue next-cycle scoping</li><li>Answer dev questions</li></ul></td>
-        <td><ul><li>Continue next-cycle scoping</li><li>Answer dev questions</li></ul></td>
-        <td><ul><li>Finalize next-cycle scope</li><li>Support dev freeze prep</li></ul></td>
-        <td><ul><li>Validate demo against requirements</li><li>Lessons learned (Responsible)</li></ul></td>
-      </tr>
-      <tr data-role="sm">
-        <td class="col-role">Product Managers</td>
-        <td><ul><li>Attend PSB</li><li>BHO (D+3) &mdash; Intake &amp; Integration to Team</li><li>Stakeholder maps</li></ul></td>
-        <td><ul><li>Prioritize backlog</li><li>Define acceptance criteria</li></ul></td>
-        <td><ul><li>Manage backlog</li><li>Stakeholder engagement</li></ul></td>
-        <td><ul><li>Midpoint product check-in</li><li>Adjust priorities</li></ul></td>
-        <td><ul><li>Manage backlog</li><li>Stakeholder engagement</li></ul></td>
-        <td><ul><li>Prep demo materials</li><li>Milestone chart update</li></ul></td>
-        <td><ul><li>Lead product demo</li><li>Collect stakeholder feedback</li></ul></td>
-      </tr>
-      <tr data-role="dev">
-        <td class="col-role">Scrum Masters</td>
-        <td><ul><li>ART Sync (D+1)</li><li>PI Kickoff (D+2)</li></ul></td>
-        <td><ul><li>Stand up sprint ceremonies</li><li>Facilitate discovery sprint</li></ul></td>
-        <td><ul><li>Daily standups</li><li>Remove blockers</li><li>Protect sprint time</li></ul></td>
-        <td><ul><li>Scrum of Scrums (~D+35)</li><li>Process change discussion</li><li>Stakeholder engagement plan</li></ul></td>
-        <td><ul><li>Daily standups</li><li>Remove blockers</li><li>Protect sprint time</li></ul></td>
-        <td><ul><li>Dev freeze coordination</li><li>Sprint close-out</li></ul></td>
-        <td><ul><li>Facilitate Demo/Retro</li><li>Update milestone chart</li></ul></td>
-      </tr>
-      <tr data-role="km">
-        <td class="col-role">Developers<br><span style="font-weight:400;font-size:10px;">(~5 per team)</span></td>
-        <td><ul><li>PI Kickoff (D+2)</li></ul></td>
-        <td><ul><li>Technical discovery</li><li>Estimate work</li><li>Prototype if needed</li></ul></td>
-        <td style="background:rgba(212,130,10,0.06);"><ul><li><strong>PRIMARY EFFORT</strong></li><li>Design &amp; build</li><li>Unit testing</li></ul></td>
-        <td style="background:rgba(212,130,10,0.06);"><ul><li><strong>PRIMARY EFFORT</strong></li><li>Continue build</li><li>Integration testing</li></ul></td>
-        <td style="background:rgba(212,130,10,0.06);"><ul><li><strong>PRIMARY EFFORT</strong></li><li>Continue build</li><li>Integration testing</li></ul></td>
-        <td style="background:rgba(212,130,10,0.06);"><ul><li>Feature completion</li><li>Dev freeze before demo</li><li>Bug fixes only</li></ul></td>
-        <td><ul><li>Support demo</li><li>Internal team AAR</li></ul></td>
-      </tr>
-      <tr data-role="sustainment">
-        <td class="col-role">Knowledge Mgmt (KM)<br><span style="font-weight:400;font-size:10px;">(Under Intake &amp; Integration)</span></td>
-        <td><ul><li>BHO (D+3)</li></ul></td>
-        <td style="background:rgba(55,126,184,0.06);"><ul><li>Develop artifacts</li><li>Help with documentation</li></ul></td>
-        <td><ul><li>Update technical docs</li><li>Update user guides</li></ul></td>
-        <td><ul><li>Update technical docs</li><li>Update user guides</li></ul></td>
-        <td><ul><li>Update technical docs</li><li>Update user guides</li></ul></td>
-        <td><ul><li>Update technical docs</li><li>Update user guides</li></ul></td>
-        <td><ul><li>Link with PMs</li><li>Compile demo &amp; AAR materials</li></ul></td>
-      </tr>
-      <tr data-role="training">
-        <td class="col-role">Sustainment<br><span class="tbd">TBD &mdash; Need People</span></td>
-        <td class="draft-note">N/A this cycle</td>
-        <td class="draft-note">N/A this cycle</td>
-        <td class="draft-note">N/A this cycle</td>
-        <td class="draft-note">N/A this cycle</td>
-        <td class="draft-note">N/A this cycle</td>
-        <td class="draft-note">N/A this cycle</td>
-        <td><ul><li>Handoff briefing</li><li>Accept deployed capabilities</li></ul></td>
-      </tr>
-      <tr>
-        <td class="col-role">Training Team<br><span style="font-weight:400;font-size:10px;">(Outside ODT)</span></td>
-        <td class="draft-note">N/A</td>
-        <td class="draft-note">N/A</td>
-        <td class="draft-note">N/A</td>
-        <td class="draft-note">N/A</td>
-        <td class="draft-note">N/A</td>
-        <td><ul><li>Develop training materials for new capabilities</li></ul></td>
-        <td><ul><li>Validate training against demo</li></ul></td>
-      </tr>
-    </tbody>
+    <tbody id="syncTableBody"></tbody>
   </table>
 
   <div class="sync-legend">
-    <span><div class="swatch" style="background:#2A0845;"></div> PSB Activities</span>
-    <span><div class="swatch" style="background:#377EB8;"></div> Discovery &amp; Framing (Sprint 1)</span>
-    <span><div class="swatch" style="background:#d4820a;"></div> Dev Sprints (1&ndash;4)</span>
-    <span><div class="swatch" style="background:#C41A1C;"></div> Demo/Retro</span>
-    <span style="color:#c0392b; font-weight:600;">TBD = personnel not yet identified</span>
+    <span><div class="swatch swatch-psb"></div> PSB Activities</span>
+    <span><div class="swatch swatch-scope"></div> Discovery &amp; Framing (Sprint 1)</span>
+    <span><div class="swatch swatch-dev"></div> Dev Sprints (1&ndash;4)</span>
+    <span><div class="swatch swatch-demo"></div> Demo/Retro</span>
+    <span class="sync-legend-note">TBD = personnel not yet identified</span>
   </div>
 </div>
 
-<!-- TBD -->
+
 <div class="tbd-section">
   <h3>To be determined:</h3>
   <ul>
@@ -762,19 +548,17 @@
   </ul>
 </div>
 
-<!-- ═══════ GAPS / ADDITIONAL NOTES ═══════ -->
+
 <div class="tbd-section">
   <h3>Additional Notes</h3>
   <ul>
     <li><strong>People row not yet depicted:</strong> Source maps responsible parties across the lifecycle &mdash; ODT Intake &amp; Integration Team (Intake/Concept) &rarr; ART/Devs/PMs (Development) &rarr; TBD (Execution &amp; Sustainment) &rarr; Unknown (Evolution/EOL)</li>
     <li><strong>End-of-cycle D-Day:</strong> D+60 = D-Day for the next cycle. The cycle is continuous (3 cycles per FY).</li>
-    <li><strong>Capability Lifecycle reference graphic:</strong> See <a href="assets/capability_lifecycle_process.png" target="_blank" rel="noopener noreferrer">capability_lifecycle_process.png</a> for the visual process diagram.</li>
+    <li><strong>Capability Lifecycle reference graphic:</strong> See <a href="assets/images/capability_lifecycle_process.png" target="_blank" rel="noopener noreferrer">capability_lifecycle_process.png</a> for the visual process diagram.</li>
   </ul>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════
-     ONE-PAGER: SAFe (Scaled Agile Framework)
-     ═══════════════════════════════════════════════════════ -->
+
 <div class="onepager">
   <div class="onepager-divider"></div>
   <h2 class="onepager-title" id="safeBackground">Background: Scaled Agile Framework (SAFe)</h2>
@@ -831,9 +615,7 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════
-     ONE-PAGER: Capability Lifecycle Process
-     ═══════════════════════════════════════════════════════ -->
+
 <div class="onepager">
   <div class="onepager-divider"></div>
   <h2 class="onepager-title" id="capLifecycle">Background: Capability Lifecycle Process</h2>
@@ -881,9 +663,7 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════
-     IMPLEMENTATION GUIDE
-     ═══════════════════════════════════════════════════════ -->
+
 <div class="impl-guide">
   <div class="impl-divider"></div>
   <div class="impl-title" id="implGuide">Implementation Guide &mdash; Capability Lifecycle (DRAFT)</div>
@@ -894,226 +674,222 @@
     <button type="button" data-view="timeline">By Phase</button>
   </div>
 
-  <!-- ══════════════════════════════════════
-       ROLE-BASED VIEW (default)
-       ══════════════════════════════════════ -->
+  
   <div id="implRole" class="impl-view active">
 
-    <!-- CG / Senior Leaders -->
+    
     <div class="role-card">
       <div class="role-card-header">CG / Senior Leaders <span class="role-tag">Decision Authority</span></div>
       <div class="role-card-body">
-        <div class="role-phase"><div class="role-phase-label" style="background:#2A0845;">PSB Week</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-psb">PSB Week</div>
           <ul><li>Chair PSB (D-Day) &mdash; approve, defer, or divest each project</li><li>Set priorities for the cycle</li><li>Allocate resources at the command level</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#C41A1C;">Demo/Retro (Wk 12)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-demo">Demo/Retro (Wk 12)</div>
           <ul><li>Attend product demo</li><li>Provide operational feedback</li><li>Approve next cycle priorities</li><li><strong>DSD Director attends Cycle Retro/AAR</strong> &mdash; decision point: invest, divest, or pivot on each capability</li></ul>
         </div>
         <div class="role-standing"><strong>Standing rule:</strong> No direct involvement during sprints. Do not task developers or teams directly &mdash; all requests go through ART.</div>
       </div>
     </div>
 
-    <!-- OIC / NCOIC -->
+    
     <div class="role-card">
       <div class="role-card-header">OIC / NCOIC <span class="role-tag">Team Leadership</span></div>
       <div class="role-card-body">
-        <div class="role-phase"><div class="role-phase-label" style="background:#2A0845;">PSB Week</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-psb">PSB Week</div>
           <ul><li>Attend Planning Day (D-1)</li><li>Brief at PSB (D-Day) &mdash; audience: DSD &amp; Division Chiefs</li><li>ART Sync (D+1)</li><li>PI Kickoff (D+2)</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#377EB8;">Discovery &amp; Framing (Wk 2&ndash;3)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-scope">Discovery &amp; Framing (Wk 2&ndash;3)</div>
           <ul><li>Validate scope decisions</li><li>Resource allocation &mdash; confirm team assignments</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#d4820a;">Dev Sprints (Wk 4&ndash;11)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-dev">Dev Sprints (Wk 4&ndash;11)</div>
           <ul><li>Remove blockers (ongoing)</li><li>Monitor progress &mdash; not micromanage</li><li>Midpoint check-in (~D+35)</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#C41A1C;">Demo/Retro (Wk 12)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-demo">Demo/Retro (Wk 12)</div>
           <ul><li>Review demo materials</li><li>Lead internal AAR</li><li>Prep next cycle PSB brief</li></ul>
         </div>
       </div>
     </div>
 
-    <!-- ART -->
+    
     <div class="role-card">
       <div class="role-card-header">ART / Release Train Engineer <span class="role-tag">Process Owner</span></div>
       <div class="role-card-body">
-        <div class="role-phase"><div class="role-phase-label" style="background:#2A0845;">PSB Week</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-psb">PSB Week</div>
           <ul><li>Support Planning Day (D-1)</li><li>Attend PSB (D-Day)</li><li>Lead ART Sync (D+1) &mdash; assign teams, identify cross-team dependencies</li><li>Lead PI Kickoff (D+2) &mdash; brief PSB summary, set cycle objectives</li><li>BHO &mdash; Intake &amp; Integration Team to Team (D+3) &mdash; ART, PMs, Stakeholders</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#377EB8;">Discovery &amp; Framing (Wk 2&ndash;3)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-scope">Discovery &amp; Framing (Wk 2&ndash;3)</div>
           <ul><li>Assign teams &amp; work</li><li>Coordinate cross-team dependencies</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#d4820a;">Dev Sprints (Wk 4&ndash;11)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-dev">Dev Sprints (Wk 4&ndash;11)</div>
           <ul><li>Facilitate sprint ceremonies</li><li><strong>Shield developers from all interruptions</strong> &mdash; random people, meetings, drive-by requests go through ART, NOT developers</li><li>Scrum of Scrums (~D+35) &mdash; process discussion with all Scrum Masters</li><li>Product Midpoint Check-in (~D+35)</li><li>Process adjustments as needed</li><li><strong>AAR w/ DSD &amp; Stakeholders</strong> at each sprint boundary &mdash; project updates</li><li><strong>Back-brief boss</strong> on plan, dependencies &amp; projected progress</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#C41A1C;">Demo/Retro (Wk 12)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-demo">Demo/Retro (Wk 12)</div>
           <ul><li>Coordinate demo logistics</li><li>Facilitate Retro</li><li>Aggregate lessons learned across teams</li><li>Document process changes for next cycle</li></ul>
         </div>
         <div class="role-standing"><strong>Standing rules:</strong> ART handles ALL random drop-ins. No ceremonial or drive-by meetings outside prescribed ceremonies. If someone bypasses this, intervene same day. Review previous cycle&rsquo;s lessons at D-1 Planning Day &mdash; implement at least one process change per cycle. <strong>ART is responsible for coordination with subordinate MSCs.</strong></div>
       </div>
     </div>
 
-    <!-- CDO -->
+    
     <div class="role-card">
       <div class="role-card-header">CDO <span class="role-tag">Data Strategy</span></div>
       <div class="role-card-body">
-        <div class="role-phase"><div class="role-phase-label" style="background:#2A0845;">PSB Week</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-psb">PSB Week</div>
           <ul><li>Attend PSB</li><li>Align data strategy with cycle priorities</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#377EB8;">Discovery &amp; Framing (Wk 2&ndash;3)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-scope">Discovery &amp; Framing (Wk 2&ndash;3)</div>
           <ul><li>Validate data requirements</li><li>Governance guidance</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#d4820a;">Dev Sprints (Wk 4&ndash;11)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-dev">Dev Sprints (Wk 4&ndash;11)</div>
           <ul><li>Available for governance decisions as needed</li><li>Stakeholder engagement as needed</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#C41A1C;">Demo/Retro (Wk 12)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-demo">Demo/Retro (Wk 12)</div>
           <ul><li>Attend demo</li><li>Strategic feedback</li></ul>
         </div>
       </div>
     </div>
 
-    <!-- Intake &amp; Integration Team -->
+    
     <div class="role-card">
       <div class="role-card-header">Intake &amp; Integration Team (Deputy + 2&ndash;3) <span class="role-tag">Requirements &amp; Liaison</span></div>
       <div class="role-card-body">
-        <div class="role-standing" style="margin-bottom:10px;"><strong>Liaison authority:</strong> Responsible for coordinating with adjacent &amp; higher commands; has direct liaison authority.</div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#2A0845;">Pre-Cycle + PSB Week</div>
+        <div class="role-standing role-standing-spaced"><strong>Liaison authority:</strong> Responsible for coordinating with adjacent &amp; higher commands; has direct liaison authority.</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-psb">Pre-Cycle + PSB Week</div>
           <ul><li>Triage all Hermes submissions &mdash; each needs: problem statement, data source, requestor POC, feasibility flag</li><li>Prepare PSB briefing package &mdash; prioritized list with approve/defer/divest recommendation</li><li>Present scoped problems at Planning Day (D-1), PSB RXL (rehearsal)</li><li>BHO &mdash; Intake &amp; Integration Team to Team (D+3)</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#377EB8;">Discovery &amp; Framing (Wk 2&ndash;3) &mdash; PRIMARY EFFORT</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-scope">Discovery &amp; Framing (Wk 2&ndash;3) &mdash; PRIMARY EFFORT</div>
           <ul><li>Scope each approved project &mdash; data connection confirmed, history reviewed, feasibility validated</li><li>Write sprint-ready requirements &mdash; testable, sized, acceptance criteria written</li><li>Hand off to PMs for backlog prioritization</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#d4820a;">Dev Sprints (Wk 4&ndash;11)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-dev">Dev Sprints (Wk 4&ndash;11)</div>
           <ul><li>Clarify requirements for devs as questions arise</li><li><strong>Begin scoping NEXT cycle in parallel</strong> &mdash; do not wait for current cycle to end</li><li>Finalize next-cycle scope by end of Sprint 4</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#C41A1C;">Demo/Retro (Wk 12)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-demo">Demo/Retro (Wk 12)</div>
           <ul><li>Validate demo against original requirements</li><li>Lessons learned &mdash; Intake &amp; Integration Team is <strong>Responsible</strong> (RACI)</li></ul>
         </div>
       </div>
     </div>
 
-    <!-- Product Managers -->
+    
     <div class="role-card">
       <div class="role-card-header">Product Managers <span class="role-tag">Backlog &amp; Stakeholders</span></div>
       <div class="role-card-body">
-        <div class="role-phase"><div class="role-phase-label" style="background:#2A0845;">PSB Week</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-psb">PSB Week</div>
           <ul><li>Attend PSB</li><li>BHO &mdash; Intake &amp; Integration Team to Team (D+3) &mdash; build stakeholder map for each project: who is the consumer, what does success look like, who approves</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#377EB8;">Discovery &amp; Framing (Wk 2&ndash;3)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-scope">Discovery &amp; Framing (Wk 2&ndash;3)</div>
           <ul><li>Prioritize backlog &mdash; order by priority, finalize Sprint 2 work queue</li><li>Define acceptance criteria with Intake &amp; Integration Team</li><li>Flag dependencies</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#d4820a;">Dev Sprints (Wk 4&ndash;11)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-dev">Dev Sprints (Wk 4&ndash;11)</div>
           <ul><li>Manage backlog &mdash; groom weekly, size new items, accept or return completed items with feedback</li><li>Stakeholder engagement &mdash; keep consumers informed</li><li>Midpoint product check-in (~D+35) &mdash; what&rsquo;s on track, what&rsquo;s at risk, what needs to pivot</li><li>Prep demo materials &mdash; update milestone chart each sprint</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#C41A1C;">Demo/Retro (Wk 12)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-demo">Demo/Retro (Wk 12)</div>
           <ul><li><strong>Lead product demo</strong> &mdash; show working capability, not slides. Named consumer validates.</li><li>Collect feedback same day &mdash; categorize: fix now, next cycle, backlog, won&rsquo;t do</li></ul>
         </div>
       </div>
     </div>
 
-    <!-- Scrum Masters -->
+    
     <div class="role-card">
       <div class="role-card-header">Scrum Masters <span class="role-tag">Sprint Execution</span></div>
       <div class="role-card-body">
-        <div class="role-phase"><div class="role-phase-label" style="background:#2A0845;">PSB Week</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-psb">PSB Week</div>
           <ul><li>ART Sync (D+1)</li><li>PI Kickoff (D+2)</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#377EB8;">Discovery &amp; Framing (Wk 2&ndash;3)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-scope">Discovery &amp; Framing (Wk 2&ndash;3)</div>
           <ul><li>Stand up sprint ceremonies &mdash; daily standup time, sprint board, definition of done, retro scheduled</li><li>Facilitate discovery sprint</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#d4820a;">Dev Sprints (Wk 4&ndash;11)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-dev">Dev Sprints (Wk 4&ndash;11)</div>
           <ul><li>Daily standups &mdash; &le;15 min, three questions, blockers escalated same day</li><li>Remove blockers</li><li>Protect sprint time &mdash; no unscheduled meetings</li><li>Scrum of Scrums (~D+35) &mdash; process changes only, not project content. Bring stakeholder engagement plan.</li><li>Dev freeze coordination &mdash; no new features after freeze, bug fixes only</li><li>Update milestone chart at each sprint boundary</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#C41A1C;">Demo/Retro (Wk 12)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-demo">Demo/Retro (Wk 12)</div>
           <ul><li>Facilitate Retro</li><li>Final milestone chart update</li><li>Sprint close-out</li></ul>
         </div>
         <div class="role-standing"><strong>Standing rules:</strong> Enforce branch-first development. Enforce C2DAO naming. Milestone chart updated before every sprint boundary. No meetings beyond prescribed ceremonies.</div>
       </div>
     </div>
 
-    <!-- Developers -->
+    
     <div class="role-card">
       <div class="role-card-header">Developers (~5 per team) <span class="role-tag">Build</span></div>
       <div class="role-card-body">
-        <div class="role-phase"><div class="role-phase-label" style="background:#2A0845;">PSB Week</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-psb">PSB Week</div>
           <ul><li>PI Kickoff (D+2) &mdash; understand cycle objectives</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#377EB8;">Discovery &amp; Framing (Wk 2&ndash;3)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-scope">Discovery &amp; Framing (Wk 2&ndash;3)</div>
           <ul><li>Technical discovery &mdash; verify data sources, document technical approach</li><li>Estimate work (S/M/L)</li><li>Prototype if needed</li><li>Flag blockers to ART</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#d4820a;">Dev Sprints (Wk 4&ndash;11) &mdash; PRIMARY EFFORT</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-dev">Dev Sprints (Wk 4&ndash;11) &mdash; PRIMARY EFFORT</div>
           <ul><li>Design &amp; build &mdash; branch-first, C2DAO naming, unit tests pass, no work on main</li><li>Integration testing</li><li>Feature completion by dev freeze</li><li>After freeze: bug fixes only</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#C41A1C;">Demo/Retro (Wk 12)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-demo">Demo/Retro (Wk 12)</div>
           <ul><li>Support demo</li><li>Internal team AAR</li></ul>
         </div>
         <div class="role-standing"><strong>Standing rules:</strong> You do NOT attend unscheduled meetings. All requests go through ART or your Scrum Master. If someone tries to pull you out of sprint work, escalate to ART. Branch-first. C2DAO naming. Classification markings on everything.</div>
       </div>
     </div>
 
-    <!-- Sustainment -->
+    
     <div class="role-card">
-      <div class="role-card-header" style="background:#c0392b;">Sustainment Team <span class="role-tag">TBD &mdash; NOT STAFFED</span></div>
+      <div class="role-card-header role-card-header-sustainment">Sustainment Team <span class="role-tag">TBD &mdash; NOT STAFFED</span></div>
       <div class="role-card-body">
-        <div class="role-phase"><div class="role-phase-label" style="background:#C41A1C;">Demo/Retro (Wk 12)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-demo">Demo/Retro (Wk 12)</div>
           <ul><li>Attend handoff briefing</li><li>Accept deployed capabilities with: documentation, data sources, limitations, maintenance guidance, POC</li><li><strong>If recommendation is handoff:</strong> handoff plan must be complete before Retro</li></ul>
         </div>
-        <div class="role-standing" style="border-left-color:#c0392b;"><strong>BLOCKER:</strong> Sustainment team is not yet stood up. Need dedicated personnel to accept and maintain deployed capabilities. Without this team, capabilities either die or consume dev capacity indefinitely.</div>
+        <div class="role-standing role-standing-blocker"><strong>BLOCKER:</strong> Sustainment team is not yet stood up. Need dedicated personnel to accept and maintain deployed capabilities. Without this team, capabilities either die or consume dev capacity indefinitely.</div>
       </div>
     </div>
 
-    <!-- Training Team -->
+    
     <div class="role-card">
-      <div class="role-card-header" style="background:#666;">Training Team <span class="role-tag">Outside ODT</span></div>
+      <div class="role-card-header role-card-header-training">Training Team <span class="role-tag">Outside ODT</span></div>
       <div class="role-card-body">
-        <div class="role-phase"><div class="role-phase-label" style="background:#d4820a;">Late Dev Sprints (Wk 10&ndash;11)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-dev">Late Dev Sprints (Wk 10&ndash;11)</div>
           <ul><li>Develop training materials for new capabilities</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#C41A1C;">Demo/Retro (Wk 12)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-demo">Demo/Retro (Wk 12)</div>
           <ul><li>Validate training materials against demo</li></ul>
         </div>
         <div class="role-standing"><strong>Open item:</strong> Training team engagement process undefined. When do they get requirements? How is handoff structured? TBD.</div>
       </div>
     </div>
 
-    <!-- Knowledge Management (KM) -->
+    
     <div class="role-card">
-      <div class="role-card-header" style="background:#2a7a2a;">Knowledge Management (KM) <span class="role-tag">Under Intake &amp; Integration</span></div>
+      <div class="role-card-header role-card-header-km">Knowledge Management (KM) <span class="role-tag">Under Intake &amp; Integration</span></div>
       <div class="role-card-body">
-        <div class="role-phase"><div class="role-phase-label" style="background:#2A0845;">PSB Week</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-psb">PSB Week</div>
           <ul><li>BHO (D+3)</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#377EB8;">Discovery &amp; Framing (Wk 2&ndash;3)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-scope">Discovery &amp; Framing (Wk 2&ndash;3)</div>
           <ul><li>Develop artifacts and help with documentation</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#d4820a;">Dev Sprints (Wk 4&ndash;11)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-dev">Dev Sprints (Wk 4&ndash;11)</div>
           <ul><li>Update technical documentation</li><li>Update user guides</li><li>Link with PMs for content alignment</li></ul>
         </div>
-        <div class="role-phase"><div class="role-phase-label" style="background:#C41A1C;">Demo/Retro (Wk 12)</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-demo">Demo/Retro (Wk 12)</div>
           <ul><li>Compile demo &amp; AAR materials</li><li>Publish PI order (captures what was done, projects discontinued, etc.)</li></ul>
         </div>
         <div class="role-standing"><strong>Standing function:</strong> KM is active every phase, not just at handoff. Links with PMs throughout.<br><strong>Note:</strong> KM will become an O1A billet.</div>
       </div>
     </div>
 
-    <!-- Theater Innovation Lab (TIL) -->
+    
     <div class="role-card">
-      <div class="role-card-header" style="background:#2ecc71; color:#1a2a3a;">Theater Innovation Lab (TIL) <span class="role-tag" style="background:rgba(0,0,0,0.15);">Templated</span></div>
+      <div class="role-card-header role-card-header-til">Theater Innovation Lab (TIL) <span class="role-tag role-tag-dark">Templated</span></div>
       <div class="role-card-body">
-        <div class="role-phase"><div class="role-phase-label" style="background:#2ecc71; color:#1a2a3a;">Innovation &amp; Hackathons</div>
+        <div class="role-phase"><div class="role-phase-label phase-label-til">Innovation &amp; Hackathons</div>
           <ul><li>Not locked into existing solutions &mdash; explores emerging tools, methods, and technologies</li><li>Runs hackathons (notional injects into the sprint cycle)</li><li>Gathers innovation info from across the theater and beyond</li></ul>
         </div>
         <div class="role-standing"><strong>Composition:</strong> Innovation Team, GTEAD (Acquisitions), Legal. Reports under Intake &amp; Integration division.</div>
       </div>
     </div>
 
-  </div><!-- /implRole -->
+  </div>
 
-  <!-- ══════════════════════════════════════
-       TIMELINE VIEW (toggle)
-       ══════════════════════════════════════ -->
+  
   <div id="implTimeline" class="impl-view">
 
-  <!-- ── PRE-CYCLE (before D-1) ── -->
+  
   <div class="impl-section">
     <h3>1. Pre-Cycle Setup (Before D-1)</h3>
     <table class="impl-table">
@@ -1127,7 +903,7 @@
     </table>
   </div>
 
-  <!-- ── WEEK 1: PSB ACTIVITIES ── -->
+  
   <div class="impl-section">
     <h3>2. Week 1 &mdash; PSB Activities (D-1 through D+3)</h3>
     <table class="impl-table">
@@ -1142,7 +918,7 @@
     </table>
   </div>
 
-  <!-- ── WEEKS 2-3: SCOPING ── -->
+  
   <div class="impl-section">
     <h3>3. Weeks 2&ndash;3 &mdash; Discovery &amp; Framing (Sprint 1)</h3>
     <table class="impl-table">
@@ -1158,7 +934,7 @@
     </table>
   </div>
 
-  <!-- ── WEEKS 4-9: DEV SPRINTS ── -->
+  
   <div class="impl-section">
     <h3>4. Weeks 4&ndash;11 &mdash; Development Sprints (Dev Sprints 1&ndash;4)</h3>
     <table class="impl-table">
@@ -1181,7 +957,7 @@
     <div class="impl-note">RULE: Outside of standup, sprint boundaries, and the midpoint meetings, there should be NO other ceremonial or drive-by meetings.</div>
   </div>
 
-  <!-- ── WEEK 10: DEMO / AAR ── -->
+  
   <div class="impl-section">
     <h3>5. Week 12 &mdash; Demo/Retro (Demo, Feedback, Decision Gate)</h3>
     <table class="impl-table">
@@ -1190,7 +966,7 @@
         <tr><td>Product demo</td><td>PM leads; devs support</td><td>Dev freeze complete</td><td>Each product demoed to stakeholders. Demo shows working capability, not slides. Named consumer validates.</td></tr>
         <tr><td>Collect feedback</td><td>Product Managers</td><td>Demo complete</td><td>Feedback documented same day. Categorized: fix now, next cycle, backlog, won&rsquo;t do.</td></tr>
         <tr><td>Decision Gate &mdash; ART recommends, DSD signs off</td><td>ART recommends; DSD approves</td><td>Demo &amp; feedback complete</td><td>For each product: continue development, transition to sustainment, or discontinue. Iterative &mdash; projects may cycle back to further development. Decision documented.</td></tr>
-        <tr><td>Handoff (if recommended)</td><td>PM + Dev lead + Handoff/Scaling team</td><td>DSD approves handoff</td><td>Handoff plan must be complete before Retro. Deployed capabilities handed to sustainment with: documentation, data sources, limitations, maintenance guidance, POC. <span style="color:#c0392b;font-weight:600;">(TBD &mdash; sustainment team not yet stood up)</span></td></tr>
+        <tr><td>Handoff (if recommended)</td><td>PM + Dev lead + Handoff/Scaling team</td><td>DSD approves handoff</td><td>Handoff plan must be complete before Retro. Deployed capabilities handed to sustainment with: documentation, data sources, limitations, maintenance guidance, POC. <span class="status-not-staffed">(TBD &mdash; sustainment team not yet stood up)</span></td></tr>
         <tr><td>Internal team AAR</td><td>OIC / NCOIC leads</td><td>Demo complete</td><td>What worked, what didn&rsquo;t, what to change. Actionable items assigned with owners and deadlines.</td></tr>
         <tr><td>Aggregate lessons learned</td><td>ART</td><td>All team AARs complete</td><td>Cross-team patterns identified. Process changes for next cycle documented. RACI: Intake &amp; Integration Team (R), ART (A), Leadership (C), Stakeholders/Devs (I).</td></tr>
         <tr><td>KM publishes PI Order</td><td>Knowledge Management</td><td>PSB decisions + AAR complete</td><td>PI Order captures: what was done, project status (continue / handoff / discontinued), next cycle direction. Draft order enters PSB; final order published at PI close.</td></tr>
@@ -1200,7 +976,7 @@
     <div class="impl-note">D+60 = D-Day for the next cycle. The cycle is continuous.</div>
   </div>
 
-  <!-- ── STANDING RULES ── -->
+  
   <div class="impl-section">
     <h3>6. Standing Rules &mdash; All Phases</h3>
     <table class="impl-table">
@@ -1219,28 +995,28 @@
     </table>
   </div>
 
-  <!-- ── OPEN ITEMS ── -->
+  
   <div class="impl-section">
     <h3>7. Open Items &mdash; TBD</h3>
     <table class="impl-table">
       <thead><tr><th>Item</th><th>Status</th><th>Blocker / Notes</th></tr></thead>
       <tbody>
-        <tr><td>Sustainment team personnel</td><td style="color:#c0392b;font-weight:600;">NOT STAFFED</td><td>Need dedicated people to accept and maintain deployed capabilities. Currently no handoff target.</td></tr>
-        <tr><td>Scaling team</td><td style="color:#c0392b;font-weight:600;">UNDEFINED</td><td>Who handles enterprise rollout after sustainment? Unknown.</td></tr>
-        <tr><td>Lessons learned implementation process</td><td style="color:#e67e22;font-weight:600;">DRAFT</td><td>RACI defined. Aggregation process TBD. Need a mechanism to track whether prior lessons actually changed process.</td></tr>
-        <tr><td>Personnel alignment across teams</td><td style="color:#2ecc71;font-weight:600;">DEFINED</td><td>Three divisions: Data (Governance, ORSA, Platform, Tech Writers), Solutions/ART (3 dev team branches, PMs as Branch Chiefs), Intake &amp; Integration (D&amp;F, Handoff/Scaling, KM, TIL). Division Chiefs lead. Actual names TBD per cycle.</td></tr>
-        <tr><td>Training team integration</td><td style="color:#e67e22;font-weight:600;">DRAFT</td><td>Training is outside ODT. When do they engage? How do they get requirements? Handoff process undefined.</td></tr>
+        <tr><td>Sustainment team personnel</td><td class="status-not-staffed">NOT STAFFED</td><td>Need dedicated people to accept and maintain deployed capabilities. Currently no handoff target.</td></tr>
+        <tr><td>Scaling team</td><td class="status-not-staffed">UNDEFINED</td><td>Who handles enterprise rollout after sustainment? Unknown.</td></tr>
+        <tr><td>Lessons learned implementation process</td><td class="status-draft">DRAFT</td><td>RACI defined. Aggregation process TBD. Need a mechanism to track whether prior lessons actually changed process.</td></tr>
+        <tr><td>Personnel alignment across teams</td><td class="status-defined">DEFINED</td><td>Three divisions: Data (Governance, ORSA, Platform, Tech Writers), Solutions/ART (3 dev team branches, PMs as Branch Chiefs), Intake &amp; Integration (D&amp;F, Handoff/Scaling, KM, TIL). Division Chiefs lead. Actual names TBD per cycle.</td></tr>
+        <tr><td>Training team integration</td><td class="status-draft">DRAFT</td><td>Training is outside ODT. When do they engage? How do they get requirements? Handoff process undefined.</td></tr>
       </tbody>
     </table>
   </div>
 
-  </div><!-- /implTimeline -->
+  </div>
 
-</div><!-- /impl-guide -->
+</div>
 
 
 
-<!-- Acronym list — top-right -->
+
 <div class="acronym-box">
   <strong>PSB</strong> Priority Steering Board &bull;
   <strong>ART</strong> Agile Release Train<br>
@@ -1255,8 +1031,8 @@
   <strong>ADCON</strong> Administrative Control
 </div>
 
-<!-- Mapping SVG overlay -->
-<svg id="mappingSvg" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;">
+
+<svg id="mappingSvg" class="mapping-svg">
   <defs>
     <marker id="arrow-map" viewBox="0 0 10 7" refX="1" refY="3.5"
             markerWidth="10" markerHeight="8" orient="auto-start-reverse">
@@ -1267,13 +1043,13 @@
 
 
 
-<!-- Mobile scroll-down nav -->
+
 <div class="scroll-nav" id="scrollNav">
   <div class="scroll-label" id="scrollLabel">Org Chart</div>
   <button id="scrollBtn" type="button">&#x25BC;</button>
 </div>
 
-<!-- Acronym Glossary Footer -->
+
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-glossary">
@@ -1295,6 +1071,8 @@
 
 
 
-  <script src="main.js"></script>
+  <script src="data/site-data.js"></script>
+  <script src="js/index-page.js"></script>
 </body>
 </html>
+
