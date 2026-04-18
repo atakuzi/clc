@@ -8,6 +8,12 @@ function debounce(fn, delay) {
   };
 }
 
+var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function getScrollBehavior() {
+  return prefersReducedMotion ? 'auto' : 'smooth';
+}
+
 function setExpandedState(trigger, content, isOpen) {
   if (!trigger || !content) return;
 
@@ -20,7 +26,7 @@ function setExpandedState(trigger, content, isOpen) {
       if (trigger.getAttribute('aria-expanded') === 'false') {
         content.hidden = true;
       }
-    }, 400);
+    }, prefersReducedMotion ? 0 : 400);
   }
 }
 
@@ -307,7 +313,7 @@ var scheduleLayoutRefresh = debounce(redrawDynamicLayouts, 60);
     });
   });
 
-  if (!('IntersectionObserver' in window)) {
+  if (prefersReducedMotion || !('IntersectionObserver' in window)) {
     document.querySelectorAll('.fade-in').forEach(function(el) {
       el.classList.add('visible');
     });
@@ -370,7 +376,7 @@ window.addEventListener('resize', debounce(redrawDynamicLayouts, 150));
     var idx = getNextIdx();
     var el = document.getElementById(targets[idx]);
     if (!el) return;
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    el.scrollIntoView({ behavior: getScrollBehavior(), block: 'start' });
     setTimeout(updateLabel, 400);
   };
 
@@ -381,49 +387,39 @@ window.addEventListener('resize', debounce(redrawDynamicLayouts, 150));
 /* Pipeline drawers */
 (function() {
   document.querySelectorAll('.step').forEach(function(step, index) {
+    var trigger = step.querySelector('.step-trigger');
     var drawer = step.querySelector('.step-drawer');
-    if (!drawer) return;
+    if (!trigger || !drawer) return;
 
     if (!drawer.id) drawer.id = 'step-drawer-' + index;
     drawer.hidden = true;
-    step.setAttribute('role', 'button');
-    step.setAttribute('tabindex', '0');
-    step.setAttribute('aria-controls', drawer.id);
-    step.setAttribute('aria-expanded', 'false');
+    trigger.setAttribute('aria-controls', drawer.id);
+    trigger.setAttribute('aria-expanded', 'false');
 
     function toggleStepDrawer() {
       var wasOpen = drawer.classList.contains('open');
 
       document.querySelectorAll('.step-drawer.open').forEach(function(openDrawer) {
         var openStep = openDrawer.closest('.step');
+        var openTrigger = openStep ? openStep.querySelector('.step-trigger') : null;
         openDrawer.classList.remove('open');
         if (openStep) {
           openStep.classList.remove('active-drawer');
-          setExpandedState(openStep, openDrawer, false);
+          setExpandedState(openTrigger, openDrawer, false);
         }
       });
 
       if (!wasOpen) {
         drawer.classList.add('open');
         step.classList.add('active-drawer');
-        setExpandedState(step, drawer, true);
+        setExpandedState(trigger, drawer, true);
       }
 
       scheduleLayoutRefresh();
     }
 
-    step.addEventListener('click', function(e) {
-      if (e.target.closest('.step-drawer')) return;
+    trigger.addEventListener('click', function() {
       toggleStepDrawer();
-    });
-
-    step.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        if (!e.target.closest('.step-drawer')) {
-          toggleStepDrawer();
-        }
-      }
     });
   });
 })();
@@ -468,8 +464,6 @@ window.addEventListener('resize', debounce(redrawDynamicLayouts, 150));
   if (!panel || blocks.length === 0) return;
 
   blocks.forEach(function(block, index) {
-    block.setAttribute('role', 'button');
-    block.setAttribute('tabindex', '0');
     block.setAttribute('aria-expanded', 'false');
 
     function toggleSprintPanel() {
@@ -502,12 +496,6 @@ window.addEventListener('resize', debounce(redrawDynamicLayouts, 150));
     }
 
     block.addEventListener('click', toggleSprintPanel);
-    block.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggleSprintPanel();
-      }
-    });
   });
 })();
 
@@ -690,7 +678,7 @@ window.filterSyncRole = function(role) {
   if (navBrand) {
     navBrand.addEventListener('click', function(e) {
       e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: getScrollBehavior() });
     });
   }
 
