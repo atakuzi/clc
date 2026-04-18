@@ -59,9 +59,25 @@
 
 <div class="main-content">
 
+<!-- Hero Orientation Banner -->
+<div class="hero-banner" role="note" aria-label="Page orientation">
+  <div class="hero-banner-icon" aria-hidden="true">🗺️</div>
+  <div class="hero-banner-body">
+    <div class="hero-banner-title">How to Use This Page</div>
+    <div class="hero-banner-text">This reference describes how a data capability moves from idea to fielding inside <abbr title="United States Army Europe and Africa">USAREUR-AF</abbr>. The sections below zoom into different layers of the same process — from the high-level pipeline all the way to per-role checklists.</div>
+    <div class="hero-banner-steps">
+      <span class="hero-banner-step"><span class="hbs-num">1</span> HERMES Pipeline — how ideas enter</span>
+      <span class="hero-banner-step"><span class="hbs-num">2</span> Capability Lifecycle — full end-to-end</span>
+      <span class="hero-banner-step"><span class="hbs-num">3</span> <abbr title="Priority Steering Board">PSB</abbr> Sprint Cycle — 60-day execution</span>
+      <span class="hero-banner-step"><span class="hbs-num">4</span> Org Chart, Meetings &amp; Sync Matrix</span>
+      <span class="hero-banner-step"><span class="hbs-num">5</span> Implementation Guide — role checklists</span>
+    </div>
+  </div>
+</div>
 
 <div class="row">
   <div class="section-label hermes">HERMES &mdash; Project Pipeline</div>
+  <p class="pipeline-context"><strong>External intake funnel</strong> &mdash; this is what anyone in the command sees: a 5-step path from submitting an idea through the <abbr title="Priority Steering Board, chaired by the Commanding General">PSB</abbr> prioritization gate into active development. <strong>Click any circle</strong> for details on that step.</p>
   <div class="pipeline" id="hermesPipeline">
     <div class="step p-submit">
       <button class="step-trigger" type="button">
@@ -132,22 +148,39 @@
 </div>
 
 
-<div class="phase-progress" data-active-phase="3">
-  <div class="phase-progress-track"><div class="phase-progress-fill phase-progress-fill-60"></div></div>
-  <div class="phase-progress-dot completed" title="Submit: Active"></div>
-  <div class="phase-progress-spacer"></div>
-  <div class="phase-progress-dot completed" title="Scope: Active"></div>
-  <div class="phase-progress-spacer"></div>
-  <div class="phase-progress-dot completed" title="Prioritize: Active"></div>
-  <div class="phase-progress-spacer"></div>
-  <div class="phase-progress-dot active" title="Execute: Current Phase"></div>
-  <div class="phase-progress-spacer"></div>
-  <div class="phase-progress-dot future" title="Scale: Not Yet Active"></div>
+<div class="phase-progress-wrap">
+  <div class="phase-progress-header">
+    <span class="phase-progress-title">Program Status &mdash; Current Cycle</span>
+    <span class="phase-progress-legend">
+      <span class="ppl-item"><span class="ppl-dot ppl-dot-complete"></span>Complete</span>
+      <span class="ppl-item"><span class="ppl-dot ppl-dot-active"></span>Current</span>
+      <span class="ppl-item"><span class="ppl-dot ppl-dot-future"></span>Not Yet Active</span>
+    </span>
+  </div>
+  <div class="phase-progress" data-active-phase="3">
+    <div class="phase-progress-track"><div class="phase-progress-fill phase-progress-fill-60"></div></div>
+    <div class="phase-progress-dot completed" title="Submit: Active"></div>
+    <div class="phase-progress-spacer"></div>
+    <div class="phase-progress-dot completed" title="Scope: Active"></div>
+    <div class="phase-progress-spacer"></div>
+    <div class="phase-progress-dot completed" title="Prioritize: Active"></div>
+    <div class="phase-progress-spacer"></div>
+    <div class="phase-progress-dot active" title="Execute: Current Phase"></div>
+    <div class="phase-progress-spacer"></div>
+    <div class="phase-progress-dot future" title="Scale: Not Yet Active"></div>
+  </div>
 </div>
 
 
 <div class="row">
   <a class="section-link" href="capability_lifecycle_process.html"><div class="section-label sdlc section-label-link">Capability Lifecycle &mdash; Process Phases &#x25B6;</div></a>
+  <p class="pipeline-context"><strong>Full end-to-end process</strong> — this shows what happens to a capability across its entire life, from intake through retirement. The <em>Development</em> phase here maps directly to the <em>Execute</em> step in the <abbr title="HERMES — the command's project intake portal">HERMES</abbr> pipeline above.</p>
+  <div class="pipeline-mapping-note" aria-label="How pipelines connect">
+    <span>HERMES <strong>Execute</strong></span>
+    <span class="pmap-arrow">&#x2194;</span>
+    <span>Capability Lifecycle <strong>Development (SAFe)</strong></span>
+    <span style="margin-left:4px;color:var(--text-muted);font-weight:400">— same work, two views</span>
+  </div>
   <div class="pipeline" id="sdlcPipeline">
     <div class="step s-intake">
       <button class="step-trigger" type="button">
@@ -232,7 +265,8 @@
 
 <div class="psb-section psb-section-offset">
   <div class="row">
-    <div class="section-label psb-label" id="psbCycle">PSB Cycle &mdash; Inside Execution / Development</div>
+    <div class="section-label psb-label" id="psbCycle"><abbr title="Priority Steering Board">PSB</abbr> Cycle &mdash; Inside Execution / Development</div>
+    <p class="section-intro" style="text-align:center;margin:0 auto">What happens across 60 working days once a <abbr title="Priority Steering Board">PSB</abbr> decision is made. D-Day is the board date; everything else flows from it. <strong>Click any sprint block</strong> to see its meetings and deliverables.</p>
   </div>
 
   
@@ -264,6 +298,10 @@
     
     <div class="d-sprint-zone">
       <div class="d-day-label sprint-window-label">D+5 &rarr; D+60</div>
+      <div class="sprint-click-hint" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Click any sprint block to see meetings &amp; deliverables
+      </div>
       <div class="sprint-bar" id="sprintBar">
         
         <div class="midpoint-diamond midpoint-diamond-54">
@@ -315,7 +353,8 @@
 
 <div class="onepager">
   <div class="onepager-divider"></div>
-  <h2 class="onepager-title" id="orgChart">Team Organization &mdash; DSD Structure <button class="org-expand-all" type="button" id="orgExpandBtn">Expand All</button></h2>
+  <h2 class="onepager-title" id="orgChart">Team Organization &mdash; <abbr title="Decision Support Directorate">DSD</abbr> Structure <button class="org-expand-all" type="button" id="orgExpandBtn">Expand All</button></h2>
+  <p class="section-intro">The <abbr title="Decision Support Directorate">DSD</abbr> is organized into four divisions. Each box below is expandable. The <abbr title="Tactical Control — who you work for day-to-day">TACON</abbr> / <abbr title="Administrative Control — your rating chain">ADCON</abbr> note at the bottom is important: who you work for is not always who rates you.</p>
 
   
   <div class="org-wire">
@@ -405,7 +444,7 @@
 <div class="onepager">
   <div class="onepager-divider"></div>
   <h3 class="meeting-overview-title" id="meetingOverview">Meeting Overview &mdash; All Prescribed Ceremonies</h3>
-  <p class="meeting-overview-copy">These are the ONLY authorized meetings. No other ceremonial or drive-by meetings. If you need something not on this list, it goes through ART.</p>
+  <p class="meeting-overview-copy">These are the ONLY authorized meetings. No other ceremonial or drive-by meetings. If you need something not on this list, it goes through <abbr title="Agile Release Train — the team-of-teams that delivers value, led by a Release Train Engineer">ART</abbr>.</p>
 
   <div class="meeting-tabs" id="meetingTabs">
     <button class="meeting-tab active" type="button" data-tab="all">All</button>
@@ -502,7 +541,7 @@
 <div class="sync-section">
   <div class="sync-divider"></div>
   <div class="sync-title" id="syncMatrix">Synchronization Matrix &mdash; D-Day Cycle (DRAFT)</div>
-  <div class="sync-subtitle">Who does what across the 60-day (12-week) PI cycle. Week 1 = PSB activities, Weeks 2&ndash;3 = Discovery &amp; Framing, Weeks 4&ndash;11 = Dev Sprints (4x), Week 12 = Demo/Retro.</div>
+  <div class="sync-subtitle">Who does what across the 60-day (12-week) <abbr title="Program Increment — a fixed timebox where teams plan, build, and deliver together">PI</abbr> cycle. Week 1 = <abbr title="Priority Steering Board">PSB</abbr> activities, Weeks 2&ndash;3 = Discovery &amp; Framing, Weeks 4&ndash;11 = Dev Sprints (4x), Week 12 = Demo/Retro. Filter by role using the buttons below.</div>
 
   <div class="sync-filter-bar" id="syncFilterBar"></div>
   <table class="sync-table">
@@ -561,7 +600,7 @@
 
 <div class="onepager">
   <div class="onepager-divider"></div>
-  <h2 class="onepager-title" id="safeBackground">Background: Scaled Agile Framework (SAFe)</h2>
+  <h2 class="onepager-title" id="safeBackground">Background: Scaled Agile Framework (<abbr title="Scaled Agile Framework — a framework for coordinating multiple Agile teams around a shared mission">SAFe</abbr>)</h2>
   <div class="onepager-grid">
     <div>
       <h4>What It Is</h4>
@@ -619,6 +658,7 @@
 <div class="onepager">
   <div class="onepager-divider"></div>
   <h2 class="onepager-title" id="capLifecycle">Background: Capability Lifecycle Process</h2>
+  <p class="section-intro">Explains how a capability progresses from intake through fielding and eventual retirement. Read this alongside the pipeline diagrams at the top for full context.</p>
   <div class="onepager-grid">
     <div>
       <h4>What It Is</h4>
@@ -667,7 +707,7 @@
 <div class="impl-guide">
   <div class="impl-divider"></div>
   <div class="impl-title" id="implGuide">Implementation Guide &mdash; Capability Lifecycle (DRAFT)</div>
-  <div class="impl-subtitle">Task &rarr; Conditions &rarr; Standards. Who does what, when, and to what standard. This is the execution-level reference for PMs, Scrum Masters, and developers.</div>
+  <div class="impl-subtitle">Task &rarr; Conditions &rarr; Standards. Who does what, when, and to what standard. This is the execution-level reference for <abbr title="Product Managers — own the backlog, stakeholder engagement, and demo">PMs</abbr>, Scrum Masters, and developers. <strong>By Role</strong> shows what each person does across the cycle. <strong>By Phase</strong> shows what happens in each week.</div>
 
   <div class="impl-toggle">
     <button class="active" type="button" data-view="role">By Role</button>
